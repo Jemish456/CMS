@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Login</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/login-style.css}">
+    </th:block>
+    <script>
+
+        function showPassword() {
+            const togglePassword = document.querySelector("#toggle-password");
+            const password = document.querySelector("#password");
+
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+
+            if (password.getAttribute("type")==="text"){
+                togglePassword.classList.add("fa-eye-slash");
+                togglePassword.classList.remove("fa-eye");
+            }else {
+                togglePassword.classList.remove("fa-eye-slash");
+                togglePassword.classList.add("fa-eye");
+            }
+
+
+
+        }
+    </script>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main layout:fragment="content" class="container-fluid p-0">
+    <!--Page Content-->
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center align-items-center h-100 m-5">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                         class="img-fluid"
+                         alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form th:action="@{/authenticateUser}" method="post">
+                        <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                            <p class="lead fw-normal mb-0 me-3">Sign in</p>
+                        </div>
+
+                        <div class="divider d-flex align-items-center my-4">
+                            <!--                        <p class="text-center fw-bold mx-3 mb-0">Or</p>-->
+                        </div>
+
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                             th:if="${param.error != null}">
+                            You entered an invalid credential !!
+                            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <div class="alert alert-dismissible fade show" role="alert" data-mdb-color="success"
+                             th:if="${param.logout != null}">
+                            You have been logged out.
+                            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <div class="alert alert-dismissible fade show" role="alert" data-mdb-color="success"
+                             th:if="${message != null}">
+                            Password Changed Successfully.
+                            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+
+                        <div class="form-outline mb-4">
+                            <input type="email" name="email" id="email" class="form-control"
+                                   placeholder="Enter a valid Email"/>
+                            <label class="form-label" for="email">Email</label>
+                        </div>
+
+                        <div class="form-outline mb-3">
+                            <input type="password" name="password" id="password" class="form-control form-control-lg"
+                                   placeholder="Enter password"/>
+<!--                            <i class="form-control  fa fa-eye" onclick="showPassword()" id="toggle-password"></i>-->
+                            <label class="form-label" for="password">Password</label>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Checkbox -->
+                            <div class="form-check mb-0">
+                                <input class="form-check-input me-2" type="checkbox" name="remember-me" id="remember-me" checked/>
+                                <label class="form-check-label" for="remember-me">
+                                    Remember me
+                                </label>
+                            </div>
+<!--                                                    <a href="#!" class="text-body">Forgot password?</a>-->
+
+                            <a th:href="@{/forgot-password}" class="link-dark">Forgot password?</a>
+                        </div>
+
+
+                        <div class="text-center text-lg-start mt-4 pt-2 d-lg-flex align-items-lg-center justify-content-lg-between">
+                            <button type="submit" class="btn btn-primary btn-lg"
+                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Login
+                            </button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">
+                                Don't have an account?<br>
+                                <a th:href="@{/registerDoctor}" class="link-danger">Register Doctor</a><br>
+                                <a th:href="@{/registerPatient}" class="link-danger">Register Patient</a>
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Doctor Blockage</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main layout:fragment="content">
+    <!--Page Content-->
+
+    <section>
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="back-btn-div">
+                                <a class="back-btn" th:href="@{/doctor}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                         class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                </a>
+                                <h3 style="color: black" class=" pb-md-0 mb-md-1 text-capitalize">Add
+                                    Blockage</h3>
+                            </div>
+                            <!--                            <div th:if="${success != null}" class="alert alert-dismissible fade show" role="alert"-->
+                            <!--                                 data-mdb-color="success">-->
+                            <!--                                <th:block th:text="${success}"></th:block>-->
+                            <!--                                <button type="button" class="close" data-mdb-dismiss="alert"-->
+                            <!--                                        aria-label="Close"></button>-->
+                            <!--                            </div>-->
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-bordered mt-4 mb-4"
+                                               th:if="${not #lists.isEmpty(doctorblockage)}">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Sr. No</th>
+                                                <th scope="col">Start Date-Time</th>
+                                                <th scope="col">End Date-Time</th>
+                                                <th scope="col">Action</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="blockage,iterator  : ${doctorblockage}">
+                                                <td th:text="${iterator.index+1}"></td>
+                                                <td th:text="${blockage.startDateTime}"></td>
+                                                <td th:text="${blockage.endDateTime}"></td>
+                                                <td>
+                                                    <a class="btn btn-danger"
+                                                       th:href="@{/doctor/blockage/delete(id = ${blockage.id})}"
+                                                       onclick="if (!(confirm('Are you sure you want to delete this?'))) return false">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <form method="post" th:action="@{/doctor/blockage/add}" th:object="${doctorBlockage}">
+                                <input type="hidden" name="id" value="0">
+                                <h6 class="text-primary">* Fields are required</h6>
+
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 ">
+                                        <div class="form-outline datetimepicker w-100" data-mdb-toggle-button="false">
+                                            <input type="text" class="form-control form-control-lg" id="startDateTime"
+                                                   data-mdb-toggle="datetimepicker"
+                                                   th:field="*{startDateTime}"
+                                            />
+                                            <label for="startDateTime" class="form-label">Start Date Time*</label>
+                                        </div>
+                                        <!--                                        <span th:if="${#fields.hasErrors('startDateTime')}" th:errors="*{startDateTime}"-->
+                                        <!--                                              class="text-danger"></span>-->
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('startDateTime')}">
+                                            <li th:each="error : ${#fields.errors('startDateTime')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4 ">
+                                        <div class="form-outline datetimepicker w-100" data-mdb-toggle-button="false">
+                                            <input type="text" class="form-control form-control-lg" id="endDateTime"
+                                                   required
+                                                   data-mdb-toggle="datetimepicker"
+                                                   th:field="*{endDateTime}"
+                                            />
+                                            <label for="endDateTime" class="form-label">End Date Time*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('endDateTime')}">
+                                            <li th:each="error : ${#fields.errors('endDateTime')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2 pt-2">
+                                    <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                                    <input class="btn btn-danger btn-lg" type="reset" value="Reset"/>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+
+</body>
+</html>

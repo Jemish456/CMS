@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Salary List</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/add-review.css}">
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="back-btn-div">
+        <a class="back-btn" th:href="@{/staff/list}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </a>
+    </div>
+    <div style="justify-content: center" class="text-center">
+        <h1 style="color: black" class="mt-4 mb-3">Staff Salary</h1>
+        <hr class="mt-4">
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-primary mt-1 "
+           th:href="@{/staff/calculate/salary}">
+            Calculate Salary
+        </a>
+    </div>
+    <div class="text-lg-end mt-2 ">
+        <h3>YEAR - <span th:text=" ${#dates.year(#dates.createNow())}"></span></h3>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table  table-hover table-bordered mb-5"
+                       th:if="${not #lists.isEmpty(members)}">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">January</th>
+                        <th scope="col">february</th>
+                        <th scope="col">March</th>
+                        <th scope="col">April</th>
+                        <th scope="col">May</th>
+                        <th scope="col">June</th>
+                        <th scope="col">July</th>
+                        <th scope="col">August</th>
+                        <th scope="col">September</th>
+                        <th scope="col">October</th>
+                        <th scope="col">November</th>
+                        <th scope="col">December</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="member : ${members}">
+                        <td class="text-capitalize" th:text="${member.firstName}"></td>
+                        <td th:each="i: ${#numbers.sequence(1, 12)}">
+                            <th:block th:each="salary : ${member.getStaffSalaryList()}">
+                                <th:block th:if=" ${salary.month == i}">
+                                    <p align="center" data-bs-toggle="modal"
+                                       onclick="showSalary(this.getAttribute('data-month'),this.getAttribute('data-member-id'))"
+                                       data-bs-target="#addService"
+                                       th:data-month="${salary.month}" th:data-member-id="${member.id}">
+                                        ₹ [[${salary.getSalary()}]]
+                                        <!--                                ₹[[${salary.getNetSalary()}]]-->
+                                    </p>
+                                </th:block>
+                            </th:block>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--        <model>-->
+    <div class="modal fade" id="addService" tabindex="-1" aria-labelledby="addServiceLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Salary Details</h5>
+                </div>
+                <div class="modal-body">
+                        <span>Total Days:- <span id="total-days"></span></p>
+                            <p>Total Working Day:-<span id="total-working-day"></span> </p>
+                        <p>Salary per Day:- <span id="salary-per-days"></span></p>
+                        <p>Total Leave:- <span id="total-leave"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--        <model over>-->
+</div>
+</div>
+<div layout:fragment="otherJSResources">
+    <script type="text/javascript" th:src="@{/js/salary-details.js}"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Staff Member Details</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main layout:fragment="content" class="container py-5">
+
+    <div class="back-btn-div">
+        <a style="margin-top: -40px" class="back-btn" th:href="@{/staff/list}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-primary"
+           th:href="@{/staff/edit(memberId=${member.id})}">
+            Edit <i class="far fa-edit"></i>
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-lg-10">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0" style="font-weight: 550;">Role</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${member.memberRole}" style="font-weight: 550;"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Full Name</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0 text-capitalize"
+                               th:text="${member.firstName + ' '
+                               + member.lastName}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${member.email}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Mobile</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${member.mobileNumber}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Joining Date</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${member.joiningDate}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Salary</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${member.salary}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Start Work Time</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${member.startWorkTime}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">End Work Time</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${member.endWorkTime}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

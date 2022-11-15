@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Doctor List</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/add-review.css}">
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 class="m-5">Doctor Reviews</h1>
+        <hr class="mt-5">
+        <img th:src="@{/display/image/(id=${doctor.id})}" class="rounded-circle" height="100px" width="100px"/>
+        <p th:text="${doctor.firstName + ' ' + doctor.lastName}"></p>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table  table-hover table-bordered mt-5"
+                       th:if="${not #lists.isEmpty(doctor)}">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Reviews</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <th:block th:each="singleReview : ${doctor.reviewList}">
+
+                        <tr>
+                            <td>
+
+                                <!--                    <div id="outer">-->
+                                <!--                        <div id="overlay" style="width:60%"></div>-->
+                                <!--                        <div id="inner">-->
+
+                                <!--                            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>-->
+
+                                <!--                        </div>-->
+                                <!--                    </div>-->
+
+                                <!--                    <label class="rating-label">-->
+                                <!--                        <form>-->
+
+
+                                <!--                        <input-->
+                                <!--                                id="rating"-->
+                                <!--                                class="rating"-->
+                                <!--                                max="5"-->
+                                <!--                                oninput="this.style.setProperty('&#45;&#45;value', `${this.valueAsNumber}`)"-->
+                                <!--                                step="0.5"-->
+                                <!--                                style="&#45;&#45;value:${singleReview.rating}"-->
+                                <!--                                type="range"-->
+                                <!--                                readonly-->
+                                <!--                               >-->
+
+                                <p th:text="${singleReview.rating}"></p>
+                                <!--                        </form>-->
+                                <!--                    </label>-->
+
+                            </td>
+                            <td th:text="${singleReview.description}"></td>
+
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

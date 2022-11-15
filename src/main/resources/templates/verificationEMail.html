@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Email Verification</title>
+    <style type="text/css">
+      a {
+        text-decoration: none;
+        outline: none;
+      }
+      @media (max-width: 649px) {
+        .o_col-full {
+          max-width: 100% !important;
+        }
+        .o_col-half {
+          max-width: 50% !important;
+        }
+        .o_hide-lg {
+          display: inline-block !important;
+          font-size: inherit !important;
+          max-height: none !important;
+          line-height: inherit !important;
+          overflow: visible !important;
+          width: auto !important;
+          visibility: visible !important;
+        }
+        .o_hide-xs,
+        .o_hide-xs.o_col_i {
+          display: none !important;
+          font-size: 0 !important;
+          max-height: 0 !important;
+          width: 0 !important;
+          line-height: 0 !important;
+          overflow: hidden !important;
+          visibility: hidden !important;
+          height: 0 !important;
+        }
+        .o_xs-center {
+          text-align: center !important;
+        }
+        .o_xs-left {
+          text-align: left !important;
+        }
+        .o_xs-right {
+          text-align: left !important;
+        }
+        table.o_xs-left {
+          margin-left: 0 !important;
+          margin-right: auto !important;
+          float: none !important;
+        }
+        table.o_xs-right {
+          margin-left: auto !important;
+          margin-right: 0 !important;
+          float: none !important;
+        }
+        table.o_xs-center {
+          margin-left: auto !important;
+          margin-right: auto !important;
+          float: none !important;
+        }
+        h1.o_heading {
+          font-size: 32px !important;
+          line-height: 41px !important;
+        }
+        h2.o_heading {
+          font-size: 26px !important;
+          line-height: 37px !important;
+        }
+        h3.o_heading {
+          font-size: 20px !important;
+          line-height: 30px !important;
+        }
+        .o_xs-py-md {
+          padding-top: 24px !important;
+          padding-bottom: 24px !important;
+        }
+        .o_xs-pt-xs {
+          padding-top: 8px !important;
+        }
+        .o_xs-pb-xs {
+          padding-bottom: 8px !important;
+        }
+      }
+      @media screen {
+        @font-face {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: 400;
+          src: local("Roboto"), local("Roboto-Regular"),
+            url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu7GxKOzY.woff2)
+              format("woff2");
+          unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+            U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        @font-face {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: 400;
+          src: local("Roboto"), local("Roboto-Regular"),
+            url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxK.woff2)
+              format("woff2");
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+            U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+            U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        @font-face {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: 700;
+          src: local("Roboto Bold"), local("Roboto-Bold"),
+            url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfChc4EsA.woff2)
+              format("woff2");
+          unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+            U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        @font-face {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: 700;
+          src: local("Roboto Bold"), local("Roboto-Bold"),
+            url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfBBc4.woff2)
+              format("woff2");
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+            U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+            U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        .o_sans,
+        .o_heading {
+          font-family: "Gill Sans", "Roboto", sans-serif !important;
+        }
+        .o_heading,
+        strong,
+        b {
+          font-weight: 700 !important;
+        }
+        a[x-apple-data-detectors] {
+          color: inherit !important;
+          text-decoration: none !important;
+        }
+      }
+    </style>
+    <!--[if mso]>
+      <style>
+        table {
+          border-collapse: collapse;
+        }
+        .o_col {
+          float: left;
+        }
+      </style>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    <![endif]-->
+  </head>
+  <body
+    class="o_body o_bg-white"
+    style="
+      width: 100%;
+      margin: 0px;
+      padding: 0px;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      background-color: #ffffff;
+    "
+  >
+    <!-- main wrap -->
+    <table
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      role="presentation"
+      style="max-width: 632px; margin: 0 auto"
+    >
+      <tbody>
+        <tr>
+          <td style="height: 30px; line-height: 30px; color: #ffffff">
+            &nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #f1f1f1">
+            <!-- preview-text -->
+            <table
+              width="100%"
+              cellspacing="0"
+              cellpadding="0"
+              border="0"
+              role="presentation"
+            >
+              <tbody>
+                <tr>
+                  <td
+                    class="o_hide"
+                    align="center"
+                    style="
+                      display: none;
+                      font-size: 0;
+                      max-height: 0;
+                      width: 0;
+                      line-height: 0;
+                      overflow: hidden;
+                      mso-hide: all;
+                      visibility: hidden;
+                    "
+                  ></td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- header -->
+            <table
+              width="100%"
+              cellspacing="0"
+              cellpadding="0"
+              border="0"
+              role="presentation"
+            >
+              <tbody>
+                <tr>
+                  <td
+                    class="o_bg-dark o_px-md o_py-md o_sans o_text"
+                    align="center"
+                    style="
+                      font-family: 'Gill Sans', sans-serif;
+                      margin-top: 0px;
+                      margin-bottom: 0px;
+                      font-size: 16px;
+                      line-height: 24px;
+                      background-color: #ffffff;
+                      padding-left: 24px;
+                      padding-right: 24px;
+                      padding-top: 24px;
+                      padding-bottom: 24px;
+                    "
+                  >
+                    <p style="margin-top: 0px; margin-bottom: 0px">
+                      <a
+                        class=""
+                        href="${{organization_website}}"
+                        style="
+                          text-decoration: none;
+                          outline: none;
+                          color: #ffffff;
+                        "
+                        ><img
+                          src="https://dev-goodlii.globalvoxprojects.com/assets/images/goodlii_logo.png"
+                          height="36"
+                          alt="OCR"
+                          style="
+                            max-width: 150px;
+                            -ms-interpolation-mode: bicubic;
+                            vertical-align: middle;
+                            border: 0;
+                            line-height: 100%;
+                            height: auto;
+                            outline: none;
+                            text-decoration: none;
+                          "
+                      /></a>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- hero-dark-button -->
+            <table
+              width="100%"
+              cellspacing="0"
+              cellpadding="0"
+              border="0"
+              role="presentation"
+            >
+              <tbody>
+                <tr>
+                  <td
+                    class="o_bg-dark o_px-md o_py-xl o_xs-py-md"
+                    align="center"
+                    style="
+                      background-color: #f15b29;
+                      padding-left: 24px;
+                      padding-right: 24px;
+                      padding-top: 64px;
+                      padding-bottom: 64px;
+                    "
+                  >
+                    <!--[if mso]><table width="584" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="center"><![endif]-->
+                    <div
+                      class="o_col-6s o_sans o_text-md o_center"
+                      style="
+                        font-family: 'Gill Sans', sans-serif;
+                        margin-top: 0px;
+                        margin-bottom: 0px;
+                        font-size: 19px;
+                        line-height: 28px;
+                        max-width: 584px;
+                        color: #ffffff;
+                        text-align: center;
+                      "
+                    >
+                      <span style="display: inline">
+                        <img
+                          src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNmZmZmZmYiPjxwYXRoIGQ9Ik0xNzEuOTI4NjMsNzQuNTI2Njd2NjkuNTQyOTVjMCwxMC40MjQ5MSAtOC40ODE1MywxOC45MDYwOCAtMTguOTA2MDgsMTguOTA2MDhoLTEzNC4xMTY0NmMtMTAuNDI0OTEsMCAtMTguOTA2MDgsLTguNDgxMTcgLTE4LjkwNjA4LC0xOC45MDYwOHYtOTQuMTY2NzljMCwtMTAuNDI0OTEgOC40ODExNywtMTguOTA2MDggMTguOTA2MDgsLTE4LjkwNjA4aDc2LjAxNTA4YzEuNzczODgsMCAzLjIxMTYyLDEuNDM3NzMgMy4yMTE2MiwzLjIxMTYyYzAsMS43NzM4OCAtMS40Mzc3MywzLjIxMTYyIC0zLjIxMTYyLDMuMjExNjJoLTc2LjAxNTA4Yy02Ljg4MzIxLDAgLTEyLjQ4Mjg1LDUuNTk5NjMgLTEyLjQ4Mjg1LDEyLjQ4Mjg1djkuNTIyNDVsNzMuNDY0NywzNS42NzY4YzMuODYxNDQsMS44NzUyMyA4LjI5MDk3LDEuODc1MjMgMTIuMTUyNzYsMGwyOS42MjI1NCwtMTQuMzg1NTVjMS41OTUxLC0wLjc3NTA3IDMuNTE3MDgsLTAuMTA5OTEgNC4yOTE3OSwxLjQ4NTkxYzAuNzc0NzEsMS41OTU0NiAwLjEwOTU1LDMuNTE3MDggLTEuNDg1OTEsNC4yOTE3OWwtMjkuNjIyNTQsMTQuMzg1NTVjLTUuNjQ0MjQsMi43NDEyOSAtMTIuMTE5NTgsMi43NDE2NSAtMTcuNzY0NTMsMGwtNzAuNjU4ODEsLTM0LjMxNHY3Ny41MDM4NGMwLDYuODgzMjEgNS41OTk2MywxMi40ODI4NSAxMi40ODI4NSwxMi40ODI4NWgxMzQuMTE2NDZjNi44ODMyMSwwIDEyLjQ4Mjg1LC01LjU5OTYzIDEyLjQ4Mjg1LC0xMi40ODI4NXYtNjkuNTQyOTVjMCwtMS43NzM4OCAxLjQzNzczLC0zLjIxMTYyIDMuMjExNjIsLTMuMjExNjJjMS43NzM4OCwwIDMuMjExNjIsMS40Mzc3MyAzLjIxMTYyLDMuMjExNjJ6TTUwLjE2NDQxLDEwOC4yNjk3MmwtMzEuMjk5NzIsMzEuMjk5NzJjLTIuMDI5MzksMi4wMjkzOSAtMC41NjQxNyw1LjQ4MjU5IDIuMjcwOTcsNS40ODI1OWMwLjgyMTgyLDAgMS42NDM2MywtMC4zMTM2NyAyLjI3MDk3LC0wLjk0MDY1bDMxLjI5OTcyLC0zMS4yOTk3MmMxLjI1NDMyLC0xLjI1NDMyIDEuMjU0MzIsLTMuMjg3NjMgMCwtNC41NDE5NGMtMS4yNTQzMiwtMS4yNTQzMiAtMy4yODc5OCwtMS4yNTQzMiAtNC41NDE5NCwwek0xMTcuMjIyNjQsMTA4LjI2OTcyYy0xLjI1NDMyLDEuMjU0MzIgLTEuMjU0MzIsMy4yODc2MyAwLDQuNTQxOTRsMzEuMjk5NzIsMzEuMjk5NzJjMC42MjY5OCwwLjYyNjk4IDEuNDQ5MTUsMC45NDA2NSAyLjI3MDk3LDAuOTQwNjVjMi44MzQ0MywwIDQuMzAwNzEsLTMuNDUyODUgMi4yNzA5NywtNS40ODI1OWwtMzEuMjk5NzIsLTMxLjI5OTcyYy0xLjI1NDY3LC0xLjI1NDMyIC0zLjI4Nzk4LC0xLjI1NDMyIC00LjU0MTk0LDB6TTEwNS45Mzc3Myw0Mi4wNTU0M2MwLC0xOC4yMTM0NCAxNC44MTc2OSwtMzMuMDMxMTQgMzMuMDMxMTQsLTMzLjAzMTE0YzE4LjIxMzQ0LDAgMzMuMDMxMTQsMTQuODE3NjkgMzMuMDMxMTQsMzMuMDMxMTRjMCwxOC4yMTM0NCAtMTQuODE3NjksMzMuMDMxMTQgLTMzLjAzMTE0LDMzLjAzMTE0Yy0xOC4yMTM0NCwwIC0zMy4wMzExNCwtMTQuODE3NjkgLTMzLjAzMTE0LC0zMy4wMzExNHpNMTEyLjM2MDk2LDQyLjA1NTQzYzAsMTQuNjcxNzQgMTEuOTM2MTYsMjYuNjA3OSAyNi42MDc5LDI2LjYwNzljMTQuNjcxNzQsMCAyNi42MDc5LC0xMS45MzYxNiAyNi42MDc5LC0yNi42MDc5YzAsLTE0LjY3MTc0IC0xMS45MzYxNiwtMjYuNjA3OSAtMjYuNjA3OSwtMjYuNjA3OWMtMTQuNjcxNzQsMCAtMjYuNjA3OSwxMS45MzYxNiAtMjYuNjA3OSwyNi42MDc5ek0xMzIuNDY1NjksNTQuMDg5MzZjMS4yNTM5NiwxLjI1Mzk2IDMuMjg3MjcsMS4yNTQzMiA0LjU0MTk0LDBsMTkuMDY0MTcsLTE5LjA2NDE3YzEuMjU0MzIsLTEuMjU0MzIgMS4yNTQzMiwtMy4yODc2MyAwLC00LjU0MTk0Yy0xLjI1NDMyLC0xLjI1NDMyIC0zLjI4NzYzLC0xLjI1NDMyIC00LjU0MTk0LDBsLTE2Ljc5MzIsMTYuNzkzMmwtNS42MDY3NywtNS42MDY3N2MtMS4yNTQzMiwtMS4yNTQzMiAtMy4yODcyNywtMS4yNTM5NiAtNC41NDE5NCwwYy0xLjI1NDMyLDEuMjU0MzIgLTEuMjUzOTYsMy4yODc2MyAwLDQuNTQxOTR6Ij48L3BhdGg+PC9nPjwvZz48L3N2Zz4="
+                          width="31px"
+                          height="31px"
+                          alt=""
+                          style="vertical-align: sub"
+                        />
+                      </span>
+                      <!-- <i class="fa-solid fa-envelope-circle-check"></i> -->
+                      <h2
+                        class="o_heading o_mb-xxs"
+                        style="
+                          display: inline;
+                          font-family: 'Gill Sans', sans-serif;
+                          font-weight: bold;
+                          margin-top: 0px;
+                          margin-bottom: 4px;
+                          margin-left: 5px;
+                          font-size: 30px;
+                          line-height: 39px;
+                        "
+                      >
+                        Email Verification
+                      </h2>
+                    </div>
+                    <!--[if mso]></td></tr></table><![endif]-->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- content -->
+            <table
+              width="100%"
+              cellspacing="0"
+              cellpadding="0"
+              border="0"
+              role="presentation"
+            >
+              <tbody>
+                <tr>
+                  <td
+                    class="o_bg-white o_px-md o_py"
+                    align=""
+                    style="
+                      background-color: #ffffff;
+                      padding-left: 24px;
+                      padding-right: 24px;
+                      padding-top: 16px;
+                      padding-bottom: 16px;
+                    "
+                  >
+                    <!--[if mso]><table width="584" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="center"><![endif]-->
+                    <div
+                      class="o_col-6s o_sans o_text o_text-secondary o_center"
+                      style="
+                        font-family: 'Gill Sans', sans-serif;
+                        margin-top: 0px;
+                        margin-bottom: 0px;
+                        font-size: 16px;
+                        line-height: 24px;
+                        max-width: 584px;
+                        color: #424651;
+                        text-align: start;
+                      "
+                    >
+                      <p
+                        class="o_mb-md"
+                        style="margin-top: 0px; margin-bottom: 24px"
+                      >
+                        Welcome to <strong> ${{organization_name}}! </strong> We
+                        are excited that you're joining us. To get started,
+                        please verify your email address by clicking the button
+                        below:
+                      </p>
+                      <table
+                        align="center"
+                        cellspacing="0"
+                        cellpadding="0"
+                        border="0"
+                        role="presentation"
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              width="300"
+                              class="o_btn o_bg-primary o_br o_heading o_text"
+                              align="center"
+                              style="
+                                font-family: 'Gill Sans', sans-serif;
+                                font-weight: bold;
+                                margin-top: 0px;
+                                margin-bottom: 0px;
+                                font-size: 16px;
+                                line-height: 24px;
+                                mso-padding-alt: 12px 24px;
+                                background-color: #6d6262;
+                                border-radius: 4px;
+                              "
+                            >
+                              <a
+                                class=""
+                                href="${{user_verification_url}}"
+                                style="
+                                  text-decoration: none;
+                                  outline: none;
+                                  color: #ffffff;
+                                  display: block;
+                                  padding: 12px 24px;
+                                  mso-text-raise: 3px;
+                                "
+                              >
+                                <span style="margin-top: 5px; padding: 5px">
+                                  <img
+                                    title="icon_verify"
+                                    src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNmZmZmZmYiPjxwYXRoIGQ9Ik04NS45OTMyOCw2LjkxMzU5Yy0yLjA3MTY5LDAuMDA0MiAtNC4xNDM3OCwwLjgyNTE5IC01LjY0Mzc1LDIuNDU5MDZsLTUuMTE5NjksNS41Njk4NGMtMC4yNTY0NSwwLjI3OTA0IC0wLjYyOTQ0LDAuMzM3NTYgLTAuOTYwNzgsMC4xNTQ1M2wtNi41ODQzOCwtMy43MTU0N2MtMy44NjY0NiwtMi4xODI5OCAtOC44OTg3OCwtMC41NDc0MiAtMTAuNzQzMjgsMy40ODcwM2wtMy4xNDQzNyw2Ljg3MzI4Yy0wLjE2MzI2LDAuMzQ5MzEgLTAuNDg3ODksMC41MTk4OCAtMC44NjY3MiwwLjQ0MzQ0bC03LjQxMDc4LC0xLjQ5MTU2Yy00LjM0NzE4LC0wLjg3NTYgLTguNjI2MDksMi4yMjU4NSAtOS4xMzc1LDYuNjMxNDFsLTAuODY2NzIsNy41MTE1NmMtMC4wNDQ4NiwwLjM4NTM1IC0wLjMwODQ2LDAuNjQ4ODMgLTAuNjg1MzEsMC42OTIwM2MtMC4wMDIyNCwwIC0wLjAwNDQ4LDAgLTAuMDA2NzIsMGwtNy41MTE1NiwwLjg2NjcyYy00LjQwODQ5LDAuNTA5MjggLTcuNTEzNDQsNC43OTE3NSAtNi42MzgxMiw5LjEzNzVjMC4wMDIyNCwwIDAuMDA0NDgsMCAwLjAwNjcyLDBsMS40OTE1Niw3LjQxMDc4YzAuMDc2OTEsMC4zODExNiAtMC4wODk3MiwwLjcxMTIzIC0wLjQ0MzQ0LDAuODczNDRsLTYuODczMjgsMy4xNDQzOGMtNC4wMzIwNCwxLjg0NjkgLTUuNjYxODQsNi44NjY5NSAtMy40ODcwMywxMC43Mjk4NGMwLDAuMDAyMjQgMCwwLjAwNDQ4IDAsMC4wMDY3MmwzLjcxNTQ3LDYuNTg0MzdoLTAuMDA2NzJjMC4xODc2MywwLjMzMzAzIDAuMTMzMTMsMC43MDI1OCAtMC4xNDc4MSwwLjk2MDc4bC01LjU2OTg0LDUuMTE5NjljLTMuMjY3NDUsMy4wMDIzNiAtMy4yNjc0NSw4LjI4NTE0IDAsMTEuMjg3NWw1LjU2OTg0LDUuMTE5NjljMC4yODA5NCwwLjI1ODIxIDAuMzM1NDQsMC42MzQ0NiAwLjE0NzgxLDAuOTY3NWwtMy43MDg3NSw2LjU3NzY2Yy0yLjE4Mjk4LDMuODY2NDYgLTAuNTQ3NDIsOC44OTg3OCAzLjQ4NzAzLDEwLjc0MzI4bDYuODczMjgsMy4xNDQzN2MwLjM0OTMxLDAuMTYzMjYgMC41MTk4OCwwLjQ4Nzg5IDAuNDQzNDQsMC44NjY3MmwtMS40OTE1Niw3LjQxMDc4Yy0wLjAwMjI0LDAgLTAuMDA0NDgsMCAtMC4wMDY3MiwwYy0wLjg3NTYsNC4zNDcxOCAyLjIzMjU3LDguNjI2MDkgNi42MzgxMiw5LjEzNzVjMC4wMDQ0OCwwLjAwMDAxIDAuMDA4OTYsMC4wMDAwMSAwLjAxMzQ0LDBsNy41MDQ4NCwwLjg0NjU2YzAuMzg1MzUsMC4wNDQ4NiAwLjY0ODgzLDAuMzE1MTcgMC42OTIwMywwLjY5MjAzbDAuODY2NzIsNy41MTE1NmMwLjUwNTk3LDQuNDExNzkgNC43ODk3LDcuNTEzODUgOS4xMzc1LDYuNjM4MTJsNy40MTA3OCwtMS40OTgyOGMwLjM4MTE2LC0wLjA3NjkyIDAuNzExMjMsMC4wOTY0NSAwLjg3MzQ0LDAuNDUwMTZsMy4xMzc2Niw2Ljg2NjU2YzEuODQ1MDQsNC4wMzU2NiA2Ljg3MjA4LDUuNjYyNzMgMTAuNzM2NTYsMy40ODcwM2MwLjAwMjI0LDAgMC4wMDQ0OCwwIDAuMDA2NzIsMGw2LjU4NDM4LC0zLjcwODc1YzAuMzMzMDMsLTAuMTg3NjIgMC43MDI1OCwtMC4xMjY0MSAwLjk2MDc4LDAuMTU0NTNsNS4xMTk2OSw1LjU2MzEzYzMuMDAyMzYsMy4yNjc0NSA4LjI4NTE0LDMuMjY3NDUgMTEuMjg3NSwwbDUuMTE5NjksLTUuNTYzMTNjMC4yNTgyMSwtMC4yODA5NCAwLjYyNzc0LC0wLjM0MjE4IDAuOTYwNzgsLTAuMTU0NTNsNi41ODQzOCwzLjcwODc1YzMuODY2NDYsMi4xODI5OCA4Ljg5ODc4LDAuNTQ3NDIgMTAuNzQzMjgsLTMuNDg3MDNsMy4xMzc2NiwtNi44NjY1NmMwLjE2MjIsLTAuMzUzNzIgMC40OTIyOCwtMC41MjcwNyAwLjg3MzQ0LC0wLjQ1MDE2bDcuNDEwNzgsMS40OTgyOGM0LjM0NzE4LDAuODc1NiA4LjYyNjA5LC0yLjIzMjU2IDkuMTM3NSwtNi42MzgxMmwwLjg2NjcyLC03LjUwNDg1di0wLjAwNjcyYzAuMDQ2ODIsLTAuMzgyMyAwLjMxMDMyLC0wLjY0OTA0IDAuNjg1MzEsLTAuNjkyMDNjMC4wMDIyNCwwIDAuMDA0NDgsMCAwLjAwNjcyLDBsNy41MDQ4NSwtMC44NjY3MmM0LjQxMTc5LC0wLjUwNTk3IDcuNTIwNTcsLTQuNzgyOTggNi42NDQ4NCwtOS4xMzA3OGMtMC4wMDIyNCwwIC0wLjAwNDQ4LDAgLTAuMDA2NzIsMGwtMS40OTE1NiwtNy40MTA3OGMtMC4wNzY5MiwtMC4zODExNiAwLjA4OTcyLC0wLjcxMTIzIDAuNDQzNDQsLTAuODczNDRsNi44NzMyOCwtMy4xNDQzOGM0LjAzNTY2LC0xLjg0NTA1IDUuNjYyNzMsLTYuODcyMDggMy40ODcwMywtMTAuNzM2NTZsLTMuNzE1NDcsLTYuNTg0MzdjLTAuMTg3NjIsLTAuMzMzMDMgLTAuMTI2NDEsLTAuNzA5MyAwLjE1NDUzLC0wLjk2NzVsNS41Njk4NSwtNS4xMTI5N2MzLjI2NzQ1LC0zLjAwMjM2IDMuMjY3NDUsLTguMjkxODYgMCwtMTEuMjk0MjJsLTUuNTY5ODUsLTUuMTEyOTdjLTAuMjgwOTQsLTAuMjU4MjEgLTAuMzQyMTgsLTAuNjM0NDYgLTAuMTU0NTMsLTAuOTY3NWwzLjcxNTQ3LC02LjU4NDM4YzIuMTgyOTgsLTMuODY2NDYgMC41NDc0MiwtOC44OTIwNiAtMy40ODcwMywtMTAuNzM2NTZsLTYuODczMjgsLTMuMTQ0MzdjLTAuMzUzNzIsLTAuMTYyMiAtMC41MjAzNSwtMC40OTIyOCAtMC40NDM0NCwtMC44NzM0NGwxLjQ5MTU2LC03LjQxMDc4YzAuMDAyMjQsMCAwLjAwNDQ4LDAgMC4wMDY3MiwwYzAuODc1NiwtNC4zNDcxOCAtMi4yMzI1NiwtOC42MTkzNyAtNi42MzgxMiwtOS4xMzA3OGwtNy41MTE1NiwtMC44NjY3MmMtMC4zODUzNSwtMC4wNDQ4NiAtMC42NDg4MywtMC4zMTUxNyAtMC42OTIwMywtMC42OTIwM2wtMC44NjY3MiwtNy41MTE1NmMtMC41MDU5NywtNC40MTE3OSAtNC43ODk3LC03LjUxMzg1IC05LjEzNzUsLTYuNjM4MTJsLTcuNDEwNzgsMS40OTgyOGMtMC4zODExNiwwLjA3NjkxIC0wLjcxMTIzLC0wLjA5NjQ0IC0wLjg3MzQ0LC0wLjQ1MDE2bC0zLjEzNzY2LC02Ljg2NjU2Yy0xLjg0NTA1LC00LjAzNTY2IC02Ljg3MjA4LC01LjY2OTQ1IC0xMC43MzY1NiwtMy40OTM3NWMtMC4wMDIyNCwwLjAwMjI0IC0wLjAwNDQ4LDAuMDA0NDggLTAuMDA2NzIsMC4wMDY3MmwtNi41ODQzOCwzLjcwODc1Yy0wLjMzMzAzLDAuMTg3NjMgLTAuNzAyNTgsMC4xMjY0MSAtMC45NjA3OCwtMC4xNTQ1M2wtNS4xMTk2OSwtNS41NjMxMmMwLC0wLjAwMjI0IDAsLTAuMDA0NDggMCwtMC4wMDY3MmMtMS41MDE5NiwtMS42MzE1MSAtMy41NzU4LC0yLjQ0MzExIC01LjY1MDQ3LC0yLjQzODkxek04NiwxMy43MzMxM2MwLjIwMjE5LC0wLjAwMDMyIDAuNDA0ODcsMC4wOTcxMSAwLjU3NzgxLDAuMjgyMTlsNS4xMTk2OSw1LjU2MzEyYzIuMzk3NDgsMi42MDg2NiA2LjMxOTkzLDMuMjMwMzQgOS40MDYyNSwxLjQ5MTU2bDYuNTg0MzgsLTMuNzA4NzVjMC40NDkyOCwtMC4yNTI5NSAwLjg4OTgsLTAuMTA3NzYgMS4xMDE4NywwLjM1NjA5bDMuMTQ0MzcsNi44NzMyOGMxLjQ3NTI0LDMuMjE3IDUuMDIwODYsNS4wMjA2OCA4LjQ5MjUsNC4zMjAxNmw3LjQxMDc4LC0xLjQ5MTU2YzAuNTAyNiwtMC4xMDEyMyAwLjg3NTcxLDAuMTcxMTkgMC45MzM5MSwwLjY3ODU5YzAuMDAyMjQsMCAwLjAwNDQ4LDAgMC4wMDY3MiwwbDAuODY2NzIsNy41MTE1NmgtMC4wMDY3MmMwLjQwNCwzLjUyNDExIDMuMjIzMjksNi4zMjk2OCA2LjczODksNi43Mzg5MWw3LjUxMTU2LDAuODY2NzJjMC41MTM2NCwwLjA1OTYyIDAuNzg2NjcsMC40Mzc0IDAuNjg1MzEsMC45NDA2M2wtMS40OTgyOCw3LjQwNDA2Yy0wLjcwMDUzLDMuNDcxNjQgMS4xMDMxNSw3LjAxNzI3IDQuMzIwMTUsOC40OTI1YzAuMDAyMjQsMCAwLjAwNDQ4LDAgMC4wMDY3MiwwbDYuODczMjgsMy4xNDQzOGMwLjQ2NTA2LDAuMjEyNjMgMC42MDg2NCwwLjY1NDU4IDAuMzU2MSwxLjEwMTg3bC0zLjcxNTQ3LDYuNTg0MzhjLTEuNzM4NzcsMy4wODYzMiAtMS4xMTcxLDcuMDE1NDkgMS40OTE1Niw5LjQxMjk3bDUuNTY5ODQsNS4xMTI5N2MwLjM3ODk1LDAuMzQ4MiAwLjM3ODk1LDAuODE0MTQgMCwxLjE2MjM1bC01LjU2OTg0LDUuMTEyOTdjLTIuNjA4NjcsMi4zOTc0OCAtMy4yMzAzNCw2LjMyNjY1IC0xLjQ5MTU2LDkuNDEyOTdsMy43MTU0Nyw2LjU4NDM3YzAuMjQ3MiwwLjQ0Njc0IDAuMTA1MjMsMC44OTA5NyAtMC4zNTYxLDEuMTAxODhsLTYuODczMjgsMy4xNDQzN2MtMC4wMDIyNCwwIC0wLjAwNDQ4LDAgLTAuMDA2NzIsMGMtMy4yMTcsMS40NzUyNCAtNS4wMjA2OCw1LjAxNDE0IC00LjMyMDE1LDguNDg1NzhjMCwwLjAwMjI0IDAsMC4wMDQ0OCAwLDAuMDA2NzJsMS40OTgyOCw3LjQwNDA2YzAuMTAxMjQsMC41MDI2IC0wLjE3NzkyLDAuODgyNDMgLTAuNjg1MzEsMC45NDA2M2wtNy41MTE1NiwwLjg2NjcyYy0zLjUyMTE0LDAuNDA2NjQgLTYuMzIzMjEsMy4yMTg2OCAtNi43MzIxOSw2LjczMjE5YzAsMC4wMDIyNCAwLDAuMDA0NDggMCwwLjAwNjcybC0wLjg2NjcyLDcuNTA0ODVjLTAuMDU5NjIsMC41MTM2NCAtMC40Mzc0MSwwLjc4NjY3IC0wLjk0MDYzLDAuNjg1MzFsLTcuNDEwNzgsLTEuNDk4MjhjLTMuNDcxNjQsLTAuNzAwNTMgLTcuMDE3MjYsMS4xMDk4NyAtOC40OTI1LDQuMzI2ODdsLTMuMTQ0MzcsNi44NzMyOGMtMC4yMTI2MywwLjQ2NTA2IC0wLjY1NDU4LDAuNjA4NjMgLTEuMTAxODcsMC4zNTYxbC02LjU4NDM4LC0zLjcwODc1Yy0zLjA4NjMyLC0xLjczODc3IC03LjAwODc3LC0xLjExNzEgLTkuNDA2MjUsMS40OTE1NmwtNS4xMTk2OSw1LjU2MzEzYy0wLjM0ODIsMC4zNzg5NCAtMC44MDc0MywwLjM3ODk0IC0xLjE1NTYzLDBsLTUuMTE5NjksLTUuNTYzMTNjLTIuMzk3NDgsLTIuNjA4NjYgLTYuMzE5OTMsLTMuMjMwMzMgLTkuNDA2MjUsLTEuNDkxNTZsLTYuNTg0MzgsMy43MDg3NWMtMC40NDkyOCwwLjI1Mjk0IC0wLjg4OTgsMC4xMDc3OCAtMS4xMDE4NywtMC4zNTYxbC0zLjE0NDM3LC02Ljg3MzI4Yy0xLjQ3NTI0LC0zLjIxNyAtNS4wMjA4NiwtNS4wMjc0IC04LjQ5MjUsLTQuMzI2ODdsLTcuNDEwNzgsMS40OTgyOGMtMC41MDI2LDAuMTAxMjQgLTAuODc1NzEsLTAuMTcxMjEgLTAuOTMzOTEsLTAuNjc4NmMtMC4wMDIyNCwwIC0wLjAwNDQ4LDAgLTAuMDA2NzIsMGwtMC44NjY3MiwtNy41MTE1NmgwLjAwNjcyYy0wLjQwNCwtMy41MjQxMSAtMy4yMjMyOSwtNi4zMjk2OCAtNi43Mzg5LC02LjczODljLTAuMDA0NDgsLTAuMDAwMDEgLTAuMDA4OTYsLTAuMDAwMDEgLTAuMDEzNDQsMGwtNy41MTE1NiwtMC44NTMyOGMtMC41MDU2MywtMC4wNjQyMSAtMC43NzkxMywtMC40MzQ3NCAtMC42Nzg1OSwtMC45MzM5MWwxLjQ5ODI4LC03LjQxMDc4YzAuNzAwNTMsLTMuNDcxNjQgLTEuMTAzMTUsLTcuMDEwNTUgLTQuMzIwMTYsLTguNDg1NzhjLTAuMDAyMjQsLTAuMDAyMjQgLTAuMDA0NDgsLTAuMDA0NDggLTAuMDA2NzIsLTAuMDA2NzJsLTYuODczMjgsLTMuMTQ0MzhjLTAuNDY1MDYsLTAuMjEyNjIgLTAuNjA4NjMsLTAuNjQ3ODYgLTAuMzU2MDksLTEuMDk1MTVjMCwtMC4wMDIyNCAwLC0wLjAwNDQ4IDAsLTAuMDA2NzJsMy43MTU0NywtNi41ODQzOGMxLjczODc3LC0zLjA4NjMyIDEuMTE3MSwtNy4wMDg3NyAtMS40OTE1NiwtOS40MDYyNWwtNS41Njk4NCwtNS4xMTk2OWMtMC4zNzg5NSwtMC4zNDgyIC0wLjM3ODk1LC0wLjgwNzQyIDAsLTEuMTU1NjNsNS41Njk4NCwtNS4xMTk2OWMyLjYwODY2LC0yLjM5NzQ4IDMuMjMwMzMsLTYuMzE5OTMgMS40OTE1NiwtOS40MDYyNWwtMy43MTU0NywtNi41ODQzN2MtMC4yNTI5NSwtMC40NDkyOCAtMC4xMDc3NiwtMC44ODk4MSAwLjM1NjA5LC0xLjEwMTg4bDYuODczMjgsLTMuMTQ0MzdjMC4wMDIyNCwwIDAuMDA0NDgsMCAwLjAwNjcyLDBjMy4yMTcwMSwtMS40NzUyNCA1LjAyMDY4LC01LjAyMDg2IDQuMzIwMTYsLTguNDkyNWwtMS40OTgyOCwtNy40MTA3OGMtMC4xMDEyMywtMC41MDI2IDAuMTcxMTksLTAuODc1NzEgMC42Nzg1OSwtMC45MzM5MWMwLjAwMjI0LDAgMC4wMDQ0OCwwIDAuMDA2NzIsMGw3LjUxMTU2LC0wLjg3MzQ0YzMuNTE5NywtMC40MDc5MiA2LjMyMzMzLC0zLjIxOTcgNi43MzIxOSwtNi43MzIxOWwwLjg2NjcyLC03LjUxMTU2YzAuMDU5NjIsLTAuNTEzNjQgMC40Mzc0MSwtMC43ODY2NyAwLjk0MDYzLC0wLjY4NTMxbDcuNDEwNzgsMS40OTgyOGMzLjQ3MTY0LDAuNzAwNTMgNy4wMTA1NSwtMS4xMDMxNSA4LjQ4NTc4LC00LjMyMDE2YzAuMDAyMjQsLTAuMDAyMjQgMC4wMDQ0OCwtMC4wMDQ0OCAwLjAwNjcyLC0wLjAwNjcybDMuMTQ0MzgsLTYuODczMjhjMC4yMTI2MywtMC40NjUwNiAwLjY0Nzg2LC0wLjYwODYzIDEuMDk1MTUsLTAuMzU2MDljMC4wMDIyNCwwIDAuMDA0NDgsMCAwLjAwNjcyLDBsNi41ODQzOCwzLjcxNTQ3YzMuMDg2MzIsMS43Mzg3NyA3LjAwODc3LDEuMTE3MSA5LjQwNjI1LC0xLjQ5MTU2bDUuMTE5NjksLTUuNTY5ODRjMC4xODA2MywtMC4xOTcyNSAwLjM4MjM0LC0wLjI5NTMxIDAuNTg0NTMsLTAuMjk1NjN6TTEzNC4xNiw1NS4wNGMtMTQuMjY5MTIsMy42Mzk1MiAtNDIuODA5NTcsMTguMTkwMDcgLTUzLjUxNDg1LDQwLjAxNjg3Yy03LjEzNDU2LC03LjI3NTYgLTE3LjgzNDE5LC0xOC4xODc2NSAtNDIuODA1MTUsLTE4LjE4NzY1YzAsMCAyMy42NTc2OCwxMi4wNTg2IDM4LjY2NjQsMzguOTI4NDRjMS45MDIzMiwzLjQwNTYgNi42MjQzNywzLjIwOTc0IDguMzU4MTMsLTAuMjk1NjJjOC4xNzM0NCwtMTYuNTAxNjggMjIuNTM5MTUsLTQyLjI3MTMxIDQ5LjI5NTQ3LC02MC40NjIwM3oiPjwvcGF0aD48L2c+PC9nPjwvc3ZnPg=="
+                                    height="20px"
+                                    width="20px"
+                                    alt=""
+                                    style="vertical-align: sub"
+                                  />
+                                </span>
+                                Verify E-mail Address
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <br />Thank You, <br />${{organization_name}}<br />
+                      <i
+                        ><span style="font-size: small">
+                          This is a system generated mail, please do not
+                          reply.</span
+                        ></i
+                      >
+                    </div>
+                    <!--[if mso]></td></tr></table><![endif]-->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- footer -->
+            <table
+              width="100%"
+              cellspacing="0"
+              cellpadding="0"
+              border="0"
+              role="presentation"
+            >
+              <tbody>
+                <tr>
+                  <td
+                    class="o_bg-dark o_px-md o_py-lg"
+                    align="center"
+                    style="
+                      background-color: #f15b29;
+                      padding-left: 24px;
+                      padding-right: 24px;
+                      padding-top: 32px;
+                      padding-bottom: 32px;
+                    "
+                  >
+                    <!--[if mso]><table width="584" cellspacing="0" cellpadding="0" border="0" role="presentation"><tbody><tr><td align="center"><![endif]-->
+                    <div
+                      class="o_col-6s o_sans o_text-xs o_text-dark_light"
+                      style="
+                        font-family: 'Gill Sans', sans-serif;
+                        margin-top: 0px;
+                        margin-bottom: 0px;
+                        font-size: 14px;
+                        line-height: 21px;
+                        max-width: 584px;
+                        color: #a0a3ab;
+                      "
+                    >
+                      <p
+                        class="o_mb"
+                        style="
+                          margin-top: 0px;
+                          margin-bottom: 16px;
+                          color: #ffffff;
+                        "
+                      >
+                        Email sent by ${{organization_name}}. <br />Copyright
+                        &copy;${{copyright_year}}
+                        <a
+                          href="${{organization_website}}"
+                          style="text-decoration: none"
+                          rel="nofollow"
+                          ><b
+                            ><span style="color: #f7f7f7; padding-left: 10px"
+                              >${{organization_website}}</span
+                            ></b
+                          ></a
+                        >
+                      </p>
+                    </div>
+
+                    <!--[if mso]></td></tr></table><![endif]-->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="height: 30px; line-height: 30px; color: #ffffff">
+            &nbsp;
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- main wrap end -->
+  </body>
+</html>

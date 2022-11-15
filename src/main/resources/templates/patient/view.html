@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Patient Details</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main layout:fragment="content" class="container py-5" th:with="auth=${#authentication.getPrincipal()}">
+    <!--Page Content-->
+
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-lg-10">
+            <div class="card mb-4">
+                <div class="card-body">
+
+<!--                    BACK BUTTON                 -->
+                    <div sec:authorize="hasRole('DOCTOR')" style="margin-top: -35px; margin-bottom: 15px" class="back-btn-div">
+                        <a class="back-btn" th:href="@{/doctor/patient/list}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div sec:authorize="hasRole('PATIENT')" style="margin-top: -35px; margin-bottom: 15px" class="back-btn-div">
+                        <a class="back-btn" th:href="@{/patient}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            </svg>
+                        </a>
+                    </div>
+
+
+                    <div class="row d-flex justify-content-center mt-3">
+                        <div class="col-md-4 mb-2 text-center">
+                            <div class="rounded-circle">
+                                <img th:src="@{/display/image/(id=${param.id})}" class="rounded-circle" height="100px" width="100px"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-6 mb-4 text-center">
+                            <div class="text-center" th:if="${#strings.equalsIgnoreCase(param.id,auth.id)}">
+                                <a class="btn btn-primary"
+                                   th:href="@{/patient/edit(id=${auth.id})}">
+                                    Edit <i class="far fa-edit"></i>
+                                </a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/updatePassword(id=${auth.id})}">
+                                    Update Password <i class="fa fa-lock"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${message != null}" class="row d-flex justify-content-center">
+                        <div class="col-12">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Password Changed Successfully.
+                                <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Full Name</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0 text-capitalize"
+                               th:text="${patient.firstName + ' '
+                               + patient.middleName + ' '
+                               + patient.lastName}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${patient.email}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Mobile</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${patient.mobileNumber}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Height</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${patient.height}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Weight</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${patient.weight}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Blood Group</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${patient.bloodGroup}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Allergy</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${patient.allergy}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

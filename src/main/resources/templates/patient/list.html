@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Patient List</title>
+</head>
+<body>
+<main layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 class="m-5">Patient List</h1>
+        <hr class="mt-5">
+    </div>
+    <div th:if="${#lists.isEmpty(patients)}" class="text-center">
+        <h2>No Patient Found !!</h2>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table  table-hover table-bordered mt-5"
+                       th:if="${not #lists.isEmpty(patients)}"
+                >
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile Number</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="patient : ${patients}">
+                        <td class="text-capitalize" th:text="${patient.firstName}"></td>
+                        <td class="text-capitalize" th:text="${patient.lastName}"></td>
+                        <td th:text="${patient.email}"></td>
+                        <td th:text="${patient.mobileNumber}"></td>
+                        <td>
+                            <img th:src="@{/display/image/(id=${patient.id})}" class="rounded-circle" height="100px"
+                                 width="100px"/>
+                        </td>
+                        <td>
+                            <!--                    <a class="btn btn-info"-->
+                            <!--                       th:href="@{/doctor/patient/view(id = ${patient.id})}">-->
+                            <!--                        <i class="far fa-eye"></i>-->
+                            <!--                    </a>-->
+                            <a class="btn btn-info mb-1"
+                               title="View Patient"
+                               th:href="@{/doctor/patient/view(id = ${patient.id})}">
+                                <i class="far fa-eye"></i>
+                            </a>
+                            <a class="btn btn-success mb-1"
+                               title="Create Appointment"
+                               th:href="@{/appointment/book(id = ${patient.id})}">
+                                <i class="fas fa-calendar-check"></i>
+                            </a>
+                            <a class="btn btn-success mb-1" title="chat"
+                               th:href="@{/doctor/chat(patientId = ${patient.id})}">
+
+                                <i class="far fa-comment"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

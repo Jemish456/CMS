@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Add Invoice</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+
+    <script>
+
+        function myMessage(){
+            return "want to exit ?"
+        }
+
+    </script>
+
+</head>
+<body onbeforeunload="return myMessage()">
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+
+    </div>
+</header>
+<main layout:fragment="content">
+    <!--Page Content-->
+    <section class="gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Add Invoice</h3>
+
+                            <div style="border: black 1px solid; padding: 20px; border-radius: 5px">
+
+                                <th:block th:if="${not #lists.isEmpty(inventoryList)}">
+
+                                        <form method="post" th:action="@{/store/addStoreInvoiceDetail}"
+                                              enctype="multipart/form-data"
+                                        >
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4 pb-2">
+                                                    <select id="name" th:name="id" th:class="form-control">
+                                                        <option
+                                                                th:each="singleItem : ${inventoryList}"
+                                                                th:value="${singleItem.getId()}"
+                                                                th:text="${singleItem.getName()
+                                                                    + ' ' + singleItem.getCompany()}"
+                                                        >
+                                                        </option>
+                                                    </select>
+                                                    <!--                                            <label class="form-label" for="name">Name</label>-->
+                                                    <!--                                        <span th:if="${#fields.hasErrors('itemName')}" th:errors="*{inventory}"-->
+                                                    <!--                                              class="text-danger"></span>-->
+                                                </div>
+
+                                                <div class="col-md-6 mb-4 pb-2">
+                                                    <div class="form-outline">
+                                                        <input type="text" id="qty" class="form-control"
+                                                               title="quantity"
+                                                               th:name="qty"
+                                                               required
+                                                        />
+                                                        <label class="form-label" for="qty">Quantity</label>
+                                                    </div>
+                                                    <!--                                        <span th:if="${#fields.hasErrors('company')}" th:errors="*{inventory}"-->
+                                                    <!--                                              class="text-danger"></span>-->
+                                                </div>
+
+                                            </div>
+
+                                            <div class="mt-2 pt-2">
+                                                <button class="btn btn-info col-2">Add Item</button>
+                                            </div>
+                                        </form>
+
+                                        <th:block th:if="${#lists.isEmpty(inventoryList)}">
+
+                                            <center th:text="${msg}"></center>
+
+                                        </th:block>
+
+                                        <div th:if="${not #lists.isEmpty(itemList)}">
+
+                                            <br>
+
+                                            <center>
+
+                                                <table class="table table-bordered">
+
+                                                    <thead class="thead-dark">
+
+                                                    <tr>
+                                                        <th  class="col"> Item Name </th>
+                                                        <th  class="col"> Quantity </th>
+                                                    </tr>
+
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                    <tr th:each="item : ${itemList}">
+                                                        <td th:text="${item['stockItem'].getInventory().getName()}"></td>
+                                                        <td th:text="${item['qty']}"></td>
+                                                    </tr>
+
+                                                    </tbody>
+
+                                                </table>
+
+                                            </center>
+
+                                        </div>
+
+                                    <br>
+
+                                    <form method="post" th:action="@{/store/addStoreInvoice}"
+                                          enctype="multipart/form-data"
+                                    >
+                                        <div class="form-outline">
+                                            <input type="text" id="name" name="buyername" class="form-control"
+                                                   title="Buyer Name"
+                                                   required
+                                            />
+                                            <label class="form-label" for="name">Buyer Name</label>
+                                        </div>
+
+                                        <br>
+
+                                        <button class="btn btn-info col-2" type="submit">
+                                            <a style="color: white"> Generate Invoice
+                                            </a>
+                                        </button>
+
+                                    </form>
+
+                                    <br>
+
+                                </th:block>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+</body>
+</html>
+
+

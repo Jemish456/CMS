@@ -1,0 +1,31 @@
+    <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Message</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main align="center" layout:fragment="content">
+    <!--Page Content-->
+    <h2 class="mt-4 mb-3">Your Password Changed Successfully.</h2>
+
+    <p class="small fw-bold mt-2 pt-1 mb-0"><a
+            sec:authorize="isAnonymous()"  th:href="@{/login}"
+            class="link-danger">Login Again</a>
+
+
+    </p>
+</main>
+
+</body>
+</html>

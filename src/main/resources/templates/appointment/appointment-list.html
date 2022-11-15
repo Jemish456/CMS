@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Appointments</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 th:if="${#httpServletRequest.getRequestURI().toString() == '/appointment/approved/list'}" class="m-2">Approved List</h1>
+        <h1 th:if="${#httpServletRequest.getRequestURI().toString() == '/appointment/pending/list'}" class="m-2">Pending List</h1>
+        <h1 th:if="${#httpServletRequest.getRequestURI().toString() == '/appointment/closed/list'}" class="m-2">Closed List</h1>
+        <hr class="mt-2">
+    </div>
+
+    <div th:if="${#lists.isEmpty(appointments)}" class="text-center">
+        <h5>No Appointments Found !!</h5>
+    </div>
+
+    <div th:if="${appointmentError != null}" class="alert alert-dismissible fade show" role="alert" data-mdb-color="danger">
+        <th:block th:text="${appointmentError}"></th:block>
+        <button type="button" class="close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="row d-flex justify-content-center"> <div class="col-md-10">
+    <div class="table-responsive">
+    <table class="table table-hover table-bordered mt-5"
+           th:if="${not #lists.isEmpty(appointments)}">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Patient Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${appointment.patient.firstName + ' ' + appointment.patient.lastName}"></td>
+            <td th:text="${appointment.description}"></td>
+            <td th:text="${#dates.format(appointment.startDateTime, 'dd-MM-yyyy hh:mm a')}"></td>
+            <td th:text="${#dates.format(appointment.endDateTime, 'dd-MM-yyyy hh:mm a')}"></td>
+            <td >
+                <a title="View Appointment" class="btn btn-info"
+                   th:href="@{/appointment/view(appointmentId = ${appointment.id})}">
+                    <i class="fa fa-eye"></i>
+                </a>
+                <a title="Approve" class="btn btn-success" th:href="@{/appointment/approve(id = ${appointment.id})}"
+                   th:if=" ${appointment.status.name() == 'PENDING'} "
+                   onclick="if (!(confirm('Are you sure you want to approve this Appointment?'))) return false">
+                    <i class="fa fa-check"></i>
+                </a>
+                <a title="reject" class="btn btn-danger"
+                   th:if=" ${appointment.status.name() == 'PENDING'}  "
+                   th:href="@{/appointment/delete(id = ${appointment.id},status=${appointment.status.name()})}"
+                   onclick="if (!(confirm('Are you sure you want to close this Appointment?'))) return false">
+                    <i class="fas fa-times"></i>
+                </a>
+                <a title="reject" class="btn btn-danger"
+                   th:if=" ${appointment.status.name() == 'APPROVED'}  "
+                   th:href="@{/appointment/delete(id = ${appointment.id},status=${appointment.status.name()})}"
+                   onclick="if (!(confirm('Are you sure you want to close this Appointment?'))) return false">
+                    <i class="fas fa-times"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    </div></div>
+</div>
+</body>
+</html>

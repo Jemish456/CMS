@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Drug List</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 class="m-5">Prescription</h1>
+        <hr class="mt-5">
+    </div>
+    <div th:if="${#lists.isEmpty(prescriptionDrugList)}" class="text-center">
+        <h2>No Prescription Found !!</h2>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table th:if="${not #lists.isEmpty(prescriptionDrugList)}"
+                       class="table table-hover table-bordered mt-5">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Drug Name</th>
+                        <th>Morning</th>
+                        <th>Noon</th>
+                        <th>Evening</th>
+                        <th>Day</th>
+
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="pre :${prescriptionDrugList}">
+
+                        <td th:text="${pre.medicineName}"/>
+                        <td th:text="${pre.morningDose}"/>
+                        <td th:text="${pre.afternoonDose}"/>
+                        <td th:text="${pre.eveningDose}"/>
+                        <td th:text="${pre.days}" ./>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

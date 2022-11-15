@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Invoice</title>
+    <style>
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        a {
+            color: #0087C3;
+            text-decoration: none;
+        }
+
+        hr { /* settings for horizontal rule */
+            padding: 0px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+            border: none;
+            height: 1px;
+            /* Set the hr color */
+            color: black; /* old IE */
+            background-color: black; /* Modern Browsers */
+        }
+
+        body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            color: #000046;
+            background: #FFFFFF;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-family: SourceSansPro;
+        }
+
+        header {
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #AAAAAA;
+        }
+
+        .display-inline {
+            display: inline-block;
+        }
+
+        .header-logo img {
+            margin-left: auto;
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        #company {
+            /*float: left;*/
+            /*text-align: left;*/
+            /*align-items: center;*/
+            /*justify-content: space-between;*/
+            /*display: flex;*/
+            /*background-color: #0a47a9;*/
+            margin-bottom: 20px;
+        }
+
+        #details {
+            margin-bottom: 50px;
+            align-items: center;
+            justify-content: space-between;
+            display: flex;
+        }
+
+        #client {
+            padding-left: 4px;
+            border-left: 6px solid #283c86;
+            float: left;
+        }
+
+        #client .to {
+            color: #000046;
+        }
+
+        #client {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            line-height: 1.1;
+        }
+
+        .email {
+            color: #000046 !important;
+        }
+
+        h2.name {
+            font-size: 1.4em;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        #invoice {
+            padding-right: 8px;
+            float: right;
+            text-align: left;
+        }
+
+        #invoice h1 {
+            color: #0087C3;
+            font-size: 2.4em;
+            line-height: 1em;
+            font-weight: normal;
+            margin: 0 0 10px 0;
+        }
+
+        #invoice .date {
+            font-size: 1.1em;
+            color: #000046;;
+        }
+
+        .invoice-id, .name {
+            margin: 0;
+        }
+
+        #thanks {
+            font-size: 2em;
+            margin-bottom: 50px;
+        }
+
+        #notices .notice {
+            font-size: 1.2em;
+        }
+
+        footer {
+            color: #1cb5e0;
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            bottom: 0;
+            border-top: 1px solid #AAAAAA;
+            padding: 8px 0;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tfoot > tr:last-child {
+            background-color: #283c86;
+            color: white;
+            /*border: solid 10px black !important;*/
+        }
+
+        #total {
+            text-align: right;
+        }
+
+        #table th, #table td {
+            border: 4px solid #000;
+        }
+
+        span #rupee {
+            content: "\20B9";
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div id="company">
+        <div class="display-inline">
+            <h2 class="name" th:text="${'Dr. '+invoice.doctor.firstName+' '+invoice.doctor.lastName}">Company Name</h2>
+            <div><span th:text="${invoice.doctor.mobileNumber}"></span></div>
+            <div><a class="email" th:href="${invoice.doctor.email}"
+                    th:text="${invoice.doctor.email}"></a></div>
+        </div>
+        <div class="header-logo ">
+            <img src="src/main/resources/static/img/cms-logo.png" alt="logo"/>
+        </div>
+    </div>
+</header>
+<main>
+    <hr/>
+    <div id="details" class="clearfix">
+        <div id="client">
+            <div class="to">Invoice To:</div>
+            <h2 class="name" th:text="${invoice.patient.firstName+' '+invoice.patient.lastName}"></h2>
+            <div><a class="email" th:href="${invoice.patient.email}" th:text="${invoice.patient.email}"></a></div>
+        </div>
+        <div id="invoice">
+            <h2 class="invoice-id" th:text="${'Invoice No : '+invoice.id}"></h2>
+            <div class="date">Date : <span
+                    th:text="${#dates.format(#dates.createNow(), 'dd-MM-yyyy')}"></span></div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th class="no">No.</th>
+            <th class="desc">DESCRIPTION</th>
+            <th class="total">TOTAL(Rs.)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Doctor Fee</td>
+            <td th:text="${invoice.doctor.fee}"></td>
+        </tr>
+        <tr th:each="item,  iterStat: ${services}">
+            <td th:text="${iterStat.index + 2}"></td>
+            <td th:text="${item.serviceName}"></td>
+            <td th:text="${item.cost}"></td>
+        </tr>
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <td></td>
+            <td id="total">Total :</td>
+            <td style="font-weight: bold" th:text="${invoice.totalAmount}"></td>
+        </tr>
+        </tfoot>
+    </table>
+    <div id="thanks" style="text-align: center;margin-top: 50px">Thank you!</div>
+</main>
+</body>
+</html>

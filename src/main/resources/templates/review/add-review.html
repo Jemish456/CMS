@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Add Review</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/rating.css}">
+    </th:block>
+</head>
+<body>
+<main layout:fragment="content">
+    <!--Page Content-->
+    <section class="bg-light">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-8">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+
+                            <div class="back-btn-div">
+                                <a class="back-btn" th:href="@{/patient/doctor/view(id=${doctor.id})}">
+<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">-->
+<!--                                        <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>-->
+<!--                                    </svg>-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                         class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                </a>
+                                <h2 class="mb-4 pb-2 pb-md-0 mb-md-3 text-capitalize" style="text-align: center;color: black">Add Review</h2>
+                            </div>
+
+                            <br>
+
+
+                            <form method="post"
+                                  th:action="@{/patient/review/addReview(doctorId = ${doctor.id},patientId=${#authentication.getPrincipal().getId()})}"
+                                  th:object="${review}">
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+                                        <div>
+                                            Doctor Name :
+                                            <label class="form-label"
+                                                   th:text="${doctor.getFirstName() + ' ' + doctor.getLastName()}"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+                                        <div class="form-outline">
+
+                                            <section class='rating-widget'>
+
+                                                <!-- Rating Stars Box -->
+                                                <div class='rating-stars text-center'>
+                                                    <ul id='stars'>
+                                                        <li class='star' data-value='1'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='2'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='3'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='4'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='5'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class='success-box'>
+                                                    <input type="hidden" th:errorclass="is-invalid" id="ratingVal" class="text-message" value="0" th:field="*{rating}" >
+                                                </div>
+
+                                            </section>
+                                            <ul class="text-danger form-text" th:if="${#fields.hasErrors('rating')}">
+                                                <li th:each="error : ${#fields.errors('rating')}"
+                                                    th:text="${error}"></li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <textarea type="text" class="form-control" id="description"
+                                                      th:errorclass="is-invalid"
+                                                      title="Enter Description"
+                                                      th:field="*{description}"
+                                            ></textarea>
+                                            <label for="description" class="form-label">Enter Description</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('description')}">
+                                            <li th:each="error : ${#fields.errors('description')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mt-2 pt-2">
+                                    <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<th:block layout:fragment="otherJSResources">
+    <!--        Page Specific CSS -->
+    <script th:src="@{/js/rating.js}"></script>
+</th:block>
+
+</body>
+</html>

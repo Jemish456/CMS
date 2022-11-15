@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>STORE HOME</title>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+<!--        <script th:inline="javascript">-->
+<!--            var invoiceList = [[${invoiceList}]];-->
+<!--            console.log(invoiceList);-->
+<!--        </script>-->
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container text-center">
+        <h1 class="m-5">Today's Sale</h1>
+        <hr class="mt-5">
+        <div class="row d-flex justify-content-center"> <div class="col-md-10">
+        <div class="table-responsive">
+        <table class="table  table-hover table-bordered mt-1">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col"> Item Name </th>
+                <th scope="col"> Quantity Sold </th>
+                <th scope="col"> Selling Price </th>
+                <th scope="col"> Quantity Remains </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="invoice : ${invoiceList}">
+                <td th:text="${invoice['name']}"></td>
+                <td th:text="${invoice['soldQty']}"></td>
+                <td th:text="${invoice['sellingPrice']}"></td>
+                <td th:text="${invoice['remainQty']}"></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        </div></div>
+    </div>
+</div>
+</body>
+</html>

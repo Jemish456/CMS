@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Add Inventory</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+
+    </div>
+</header>
+<main layout:fragment="content">
+    <!--Page Content-->
+    <section class="gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="back-btn-div">
+                                <a class="back-btn" th:href="@{/doctor/drug/list}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                </a>
+                                <h3 style="color: black" class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Add Inventory</h3>
+                            </div>
+
+                            <form method="post" th:action="@{/store/addInventory}"
+                                  th:object=" ${inventory}" enctype="multipart/form-data">
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <input type="text" id="name" class="form-control"
+                                                   title="name"
+                                                   th:field="*{name}"
+                                                   th:errorclass="is-invalid""                                            />
+                                            <label class="form-label" for="name">Name</label>
+                                        </div>
+                                        <!--                                        <span th:if="${#fields.hasErrors('itemName')}" th:errors="*{inventory}"-->
+                                        <!--                                              class="text-danger"></span>-->
+<!--                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('itemName')}">-->
+<!--                                            <li th:each="error : ${#fields.errors('itemName')}"-->
+<!--                                                th:text="${error}"></li>-->
+<!--                                        </ul>-->
+                                    </div>
+
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <input type="text" id="company" class="form-control"
+                                                   title="days"
+                                                   th:field="*{company}"
+                                                   th:errorclass="is-invalid"                                            />
+                                            <label class="form-label" for="company">Company</label>
+                                        </div>
+                                        <!--                                        <span th:if="${#fields.hasErrors('company')}" th:errors="*{inventory}"-->
+                                        <!--                                              class="text-danger"></span>-->
+<!--                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('company')}">-->
+<!--                                            <li th:each="error : ${#fields.errors('company')}"-->
+<!--                                                th:text="${error}"></li>-->
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <input type="text" class="form-control form-control-lg" id="power"
+                                                   title="Power"
+                                                   th:field="*{power}"
+                                            />
+                                            <label for="power" class="form-label">Power</label>
+                                        </div>
+                                        <!--                                        <span th:if="${#fields.hasErrors('company')}" th:errors="*{inventory}"-->
+                                        <!--                                              class="text-danger"></span>-->
+                                    </div>
+
+                                </div>
+
+                                <div class="mt-2 pt-2">
+                                    <button type="submit" class="btn btn-info col-2">Add Item</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
+
+

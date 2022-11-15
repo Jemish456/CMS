@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Inventory</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 id="doctorHome" class="m-2">Stock List</h1>
+        <hr class="mt-2">
+    </div>
+
+    <div class="text-center m-3">
+        <a th:href="@{/store/addStockItem}"
+           class="btn btn-primary mb-3">
+            Add Stock
+        </a>
+    </div>
+    <div th:if="${#lists.isEmpty(stockItems)}" class="text-center">
+        <h4>No Item Found !!</h4>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table  table-hover table-bordered mt-1"
+                       th:if="${not #lists.isEmpty(stockItems)}">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Sell price</th>
+                        <th>Buy price</th>
+                        <th>Expiry Date</th>
+                        <th>Company Name</th>
+                        <th>Power</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="stock :${stockItems}">
+
+                        <td th:text="${stock.inventory.name}"/>
+                        <td th:text="${stock.qty}"/>
+                        <td th:text="${stock.sellingPrice}"/>
+                        <td th:text="${stock.buyingPrice}"/>
+                        <td th:text="${stock.expiryDate}"/>
+                        <td th:text="${stock.inventory.company}"/>
+                        <td th:text="${stock.inventory.power}"/>
+
+                        <!-- Add update button/link -->
+                        <td>
+                            <a th:href="@{/store/stockUpdate(stockItemId=${stock.id})}"
+                               title="Edit"
+                               class="btn btn-info">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a th:href="@{/store/stockDelete(stockItemId=${stock.id})}"
+                               class="btn btn-danger"
+                               title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Chat With Doctor</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/chatting.css}">
+
+    </th:block>
+    <!--    <script type="text/javascript">-->
+    <!--        document.addEventListener("DOMContentLoaded", function(event) {-->
+    <!--            const el = document.querySelector('.chat-history');-->
+    <!--            el.scrollTop = el.scrollHeight;-->
+    <!--        });-->
+    <!--    </script>-->
+
+    <!--    <script type="text/javascript">-->
+    <!--        function validChatting(form) {-->
+    <!--            let message = document.getElementById("textMessage").value;-->
+    <!--            let photo = document.getElementById("messagePhoto").value;-->
+    <!--            if (message == '' && photo == '') {-->
+    <!--                alert("Add Message Or Photo ");-->
+    <!--                return false;-->
+    <!--            } else {-->
+    <!--                return true;-->
+    <!--            }-->
+    <!--        }-->
+    <!--    </script>-->
+
+    <!--    <script language="javascript">-->
+    <!--        setTimeout(function(){-->
+    <!--            window.location.reload(1);-->
+    <!--        }, 10000);-->
+    <!--    </script>-->
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+
+    </div>
+
+<!--    <script>-->
+
+<!--        //form Submit-->
+<!--        $("form").submit(function(evt){-->
+
+<!--            evt.preventDefault();-->
+<!--            var formData = new FormData(document.getElementById('messagePhoto').files[0]);-->
+
+<!--            $.ajax({-->
+<!--                url: '/photoUpload',-->
+<!--                type: 'POST',-->
+<!--                data: formData,-->
+<!--                async: false,-->
+<!--                cache: false,-->
+<!--                contentType: false,-->
+<!--                enctype: 'multipart/form-data',-->
+<!--                processData: false,-->
+<!--                success: function (response) {-->
+
+<!--                    alert(response);-->
+<!--                }-->
+<!--            });-->
+
+<!--            return false;-->
+
+<!--        });-->
+
+<!--    </script>-->
+</header>
+<main layout:fragment="content">
+
+
+
+    <div  class="container mt-2">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="chat">
+                        <div class="chat-header clearfix">
+                            <div class="row">
+
+                                <div class="back-btn-div">
+                                    <a class="back-btn" th:href="@{/doctor/patient/list}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                        </svg>
+                                    </a>
+                                <div class="col-lg-6">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                        <img th:src="@{/display/image/(id=${patientId})}" alt="avatar" class="rounded-circle"
+                                             height="40"
+                                             width="35"
+                                             loading="lazy" >
+                                    </a>
+                                    <div class="chat-about">
+                                        <h6 class="m-b-0">[[${patientName}]]</h6>
+                                                                                <small id="status"></small>
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="chat-history" id="chatArea">
+                            <ul  th:each="mes : ${oldMessages}"class="m-b-0">
+                                <li class="clearfix">
+                                    <div th:if="${(mes.receiverId == patientId)}" class="message other-message float-right">
+                                        <img th:if="${!#strings.equalsIgnoreCase(mes.messagePhoto,null)}" th:src="@{/display/chat-image/(id=${mes.messageId})}"  height="205px" width="205px"/>
+                                        <br th:if="${!#strings.equalsIgnoreCase(mes.messagePhoto,null)}"  ><td th:if="${!#strings.equalsIgnoreCase(mes.textMessage,'')}" th:text="${mes.textMessage}" />
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <div th:if="${mes.receiverId != patientId}" class="message my-message">
+                                        <img th:if="${!#strings.equalsIgnoreCase(mes.messagePhoto,null)}" th:src="@{/display/chat-image/(id=${mes.messageId})}"  height="205px" width="205px"/>
+                                        <br th:if="${!#strings.equalsIgnoreCase(mes.messagePhoto,null)}"  >
+                                        <td th:if="${!#strings.equalsIgnoreCase(mes.textMessage,'')}" th:text="${mes.textMessage}" />
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="chat-message clearfix">
+                            <div>
+                                <form method="post" id="messageForm"  th:action="@{/doctor/chat}" th:object="${message}" enctype="multipart/form-data">
+                                    <input type="hidden" name="conversion" id="conversationId"  th:value="*{conversationId}"/>
+                                    <input type="hidden" id="senderId" th:value="*{senderId}">
+                                    <!--                                    <input type="text" id="doctorId" th:value="*{conversation.getDoctor().getId()}">-->
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="textMessage" placeholder="Message"th:field="*{textMessage}" aria-label="Message" maxlength="255"  aria-describedby="button-addon2">
+                                        <input type="file" name="photo" id="messagePhoto" th:filed = "*{photo}" class="btn btn-outline-secondary" accept="image/png,image/jpeg,image/jpg" />
+                                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-send"></i></button>
+                                        <!--                                        <button class="btn btn-outline-secondary" onclick="refreshPage()" id="button-addon3"><i class="fa fa-Reload"></i>Refresh</button></div>-->
+                                        <!--                                            <button class="btn btn-outline-secondary" type="submit" onClick="refreshPage()" id="button-addon3"><i class="fa fa-reload></i></button></div>-->
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div layout:fragment="otherJSResources">
+    <script type="text/javascript" th:src="@{/js/chatting.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</div>
+</body>
+
+</html>

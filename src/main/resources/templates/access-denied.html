@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Access Denied</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main layout:fragment="content" class="container mb-5">
+    <!--Page Content-->
+    <div class="text-center">
+        <h1 class="m-5 text-danger">
+            Access Denied - You are not authorised to access this resource.
+        </h1>
+        <hr class="mt-5">
+    </div>
+</main>
+</body>
+</html>

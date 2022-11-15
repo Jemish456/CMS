@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Doctor List</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <style>
+            .table_div {
+                overflow: scroll;
+                width: 100%;
+            }
+
+            .table_div::-webkit-scrollbar {
+                display: none;
+            }
+
+            .select_div {
+
+                width: 150px;
+                height: 40px;
+                padding: 5px;
+                margin: 1px;
+                border-radius: 5px;
+                font-size: 17px;
+                border: 0.9px solid #000046;
+                color: #00236b;
+                font-weight: 500;
+                box-shadow: 3px 3px 10px lightblue;
+
+            }
+
+            h1 {
+                margin: 50px;
+            }
+
+        </style>
+
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+
+    <div class="back-btn-div">
+        <a class="back-btn" th:href="@{/staff/list}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </a>
+        <center>
+            <h3 style="color: black" class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">View Attendance</h3>
+        </center>
+    </div>
+    <center>
+
+        <div>
+
+            <select class="select_div" id="select-month-id" onchange="getData()">
+
+            </select>
+
+            <select class="select_div" id="select-year-id" onchange="getData()">
+
+            </select>
+
+        </div>
+
+    </center>
+    <div class="table_div">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <table class="table  table-hover table-bordered mt-5 mb-5">
+                        <thead class="table-dark">
+
+                        <tr id="days-per-month-th">
+
+                        </tr>
+
+                        </thead>
+                        <tbody id="tbody">
+
+
+                        <!--            <th:block th:each="member:${members}">-->
+                        <!--                <tr>-->
+                        <!--                    <th:block th:text="${member.firstName}">-->
+                        <!--                    </th:block>-->
+                        <!--                </tr>-->
+
+                        <!--            </th:block>-->
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="otherJSResources">
+    <script th:src="@{/js/attendance.js}"></script>
+    <script>
+        getAllMonthAndYear()
+        getData()
+    </script>
+</th:block>
+
+</body>
+</html>

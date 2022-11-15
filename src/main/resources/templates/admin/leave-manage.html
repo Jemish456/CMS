@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Staff Leave Manage</title>
+    <!--    <th:block layout:fragment="otherCSSResources">-->
+    <!--        &lt;!&ndash;        Page Specific CSS &ndash;&gt;-->
+    <!--        <link rel="stylesheet" type="text/css" th:href="@{/css/register-style.css}">-->
+    <!--    </th:block>-->
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+
+    </div>
+</header>
+<main layout:fragment="content" class="container-fluid p-0">
+    <!--Page Content-->
+    <section>
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Staff Leave Manage</h3>
+                            <form method="post" th:action="@{/admin/leave/manage}" th:object="${staffLeaveManage}">
+                                <input type="hidden" name="id" value="0">
+                                <div th:if="${success != null}" class="alert alert-dismissible fade show" role="alert"
+                                     data-mdb-color="success">
+                                    <th:block th:text="${success}"></th:block>
+                                    <button type="button" class="close" data-mdb-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 ">
+                                        <div class="form-outline datepicker w-100">
+                                            <input type="text" class="form-control form-control-lg" id="effectiveDate"
+                                                   title="effectiveDate"
+                                                   th:field="*{effectiveDate}"
+                                                   data-mdb-toggle="datepicker"
+                                            />
+                                            <label for="effectiveDate" class="form-label">Effective Date*</label>
+                                        </div>
+<!--                                        <span th:if="${#fields.hasErrors('effectiveDate')}" th:errors="*{effectiveDate}"-->
+<!--                                              class="text-danger"></span>-->
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('effectiveDate')}">
+                                            <li th:each="error : ${#fields.errors('effectiveDate')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" class="form-control" id="Expiry"
+                                                   title="Expiry"
+                                                   th:field="*{carryForwardExpiry}"
+                                            />
+                                            <label class="form-label" for="Expiry">Carry Forward Months*</label>
+                                        </div>
+                                        <span th:if="${#fields.hasErrors('carryForwardExpiry')}" th:errors="*{carryForwardExpiry}"
+                                              class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" step="any" class="form-control" id="PaidLeaves"
+                                                   title="PaidLeaves"
+                                                   th:field="*{paidLeaves}"
+                                            />
+                                            <label class="form-label" for="PaidLeaves">Paid Leaves*</label>
+                                        </div>
+                                        <span th:if="${#fields.hasErrors('paidLeaves')}" th:errors="*{paidLeaves}"
+                                              class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2 pt-2">
+                                    <!--                                    <input th:if="${#dates.format(#dates.createNow(),'dd/MM/yyyy').equals(abc)}" class="btn btn-primary btn-lg" type="submit" value="Submit"/>-->
+                                    <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                                    <!--                                    <input th:if="${!(#dates.format(#dates.createNow(),'dd/MM/yyyy').equals(abc))}" class="btn btn-primary btn-lg" type="submit" value="Submit" disabled/>-->
+                                </div>
+                            </form>
+
+
+                            <!-- Print list of Annual leave manage -->
+                            <div class="row d-flex justify-content-center"> <div class="col-md-10">
+                            <div class="table-responsive">
+                            <table class="table table-hover table-bordered mt-5"
+                                   th:if="${not #lists.isEmpty(staffLeaveManageList)}">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Sr. No</th>
+                                    <th scope="col">Effective Date</th>
+                                    <th scope="col">Carry Forward Months</th>
+                                    <th scope="col">Paid Leaves</th>
+                                    <th scope="col">Annual Year</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="leaveManage,iterator  : ${staffLeaveManageList}">
+                                    <td th:text="${iterator.index+1}"></td>
+                                    <td th:text="${#dates.format(leaveManage.effectiveDate,'dd/MM/yyyy')}"></td>
+                                    <td th:text="${leaveManage.carryForwardExpiry}"></td>
+                                    <td th:text="${leaveManage.paidLeaves}"></td>
+                                    <td th:text="${leaveManage.year}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<th:block th:fragment="otherJSResources">
+    <!--        Page Specific JS -->
+    <script type="text/javascript">
+
+    </script>
+</th:block>
+</body>
+</html>

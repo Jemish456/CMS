@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Doctor Home</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 id="doctorHome" class="m-2">Doctor Home</h1>
+        <hr class="mt-2">
+    </div>
+    <div class="text-center">
+        <h3 class="m-2">Pending Appointment List</h3>
+        <br>
+    </div>
+    <div th:if="${#lists.isEmpty(appointments)}" class="text-center">
+        <h5>No Appointments Found !!</h5>
+    </div>
+
+    <div th:if="${appointmentError != null}" class="alert alert-dismissible fade show" role="alert"
+         data-mdb-color="danger">
+        <th:block th:text="${appointmentError}"></th:block>
+        <button type="button" class="close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="text-center row d-flex justify-content-center" th:if="${not #lists.isEmpty(appointments)}">
+        <center class="col-6">
+            <input type="text" onkeyup="search(0)" id="search-input" class="form-control"
+                   placeholder="Search by Patient Name / Appointment Date ">
+        </center>
+    </div>
+
+    <!--    <div class="text-center">-->
+    <!--        <center>-->
+    <!--            <input type="date" onkeyup="search()" id="search-input" class="form-control" style="width: 500px" placeholder="Search by Patient Name / Appointment Date ">-->
+    <!--        </center>-->
+    <!--    </div>-->
+
+    <div id="record">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered mt-5"
+                           th:if="${not #lists.isEmpty(appointments)}">
+                        <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Patient Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Start Time</th>
+                            <th scope="col">End Time</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="search-result" id="dataTable">
+                        <tr class="search-result" th:each="appointment : ${appointments}">
+                            <td th:text="${appointment.patient.firstName + ' ' + appointment.patient.lastName}"></td>
+                            <td th:text="${appointment.description}"></td>
+                            <td th:text="${#dates.format(appointment.startDateTime, 'dd-MM-yyyy hh:mm a')}"></td>
+                            <td th:text="${#dates.format(appointment.endDateTime, 'dd-MM-yyyy hh:mm a')}"></td>
+                            <td>
+                                <a title="View Appointment" class="btn btn-info"
+                                   th:href="@{/appointment/view(appointmentId = ${appointment.id})}">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a title="Approve" class="btn btn-success"
+                                   th:href="@{/appointment/approve(id = ${appointment.id})}"
+                                   th:if=" ${appointment.status.name() == 'PENDING'}  ">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                                <a title="reject" class="btn btn-danger"
+                                   th:if=" ${appointment.status.name() == 'PENDING'}  "
+                                   th:href="@{/appointment/delete(id = ${appointment.id})}">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="pagination-div" th:if="${not #lists.isEmpty(appointments)}">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                        <select id="row_per_page" class="page-link" onchange="changeRowValue()">
+                            <option>1</option>
+                            <option selected>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" onclick="getPreviousPage()">Previous</a>
+                    </li>
+                    <div id="number-of-pages" style="display: flex">
+
+                    </div>
+                    <li class="page-item">
+                        <a class="page-link" onclick="getNextPage()">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+</div>
+<th:block layout:fragment="otherJSResources">
+    <script th:src="@{/js/searchAppointment.js}"></script>
+    <script> search(0) </script>
+</th:block>
+
+</body>
+</html>

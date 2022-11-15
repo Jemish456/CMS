@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Leave</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <!--        <link rel="stylesheet" type="text/css" th:href="@{/css/rating.css}">-->
+    </th:block>
+
+</head>
+<body>
+
+<div layout:fragment="content" class="container py-5">
+
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-lg-10">
+            <div class="card mb-4">
+                <div class="card-body">
+
+<!--                    BACK BUTTON             -->
+                            <div class="back-btn-div">
+                                <a class="back-btn" th:href="@{/staff/list}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                </a>
+                                <h3 style="color: black" class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Leave</h3>
+                            </div>
+                            <form method="post" th:action="@{/staff/leave/apply}"
+                                  th:object=" ${staffLeaveTaken}">
+                                <input type="hidden" th:field="*{id}"/>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2 ">
+                                        <select class="select form-control-lg" id="staffMember"
+                                                th:field="*{staffMember}"
+                                                data-mdb-clear-button="true"
+                                                data-mdb-filter="true"
+                                                name="staffMember">
+                                            <option
+                                                    th:each="member :${staffMemberList}"
+                                                    th:value="${member.getId()}"
+                                                    th:text="${member.getFirstName()+'-'+member.getId()}"
+                                            >
+                                            </option>
+                                        </select>
+                                        <label class="form-label select-label" for="staffMember">Select Member*</label>
+                                    </div>
+<!--                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('endWorkTime')}">-->
+<!--                                        <li th:each="error : ${#fields.errors('endWorkTime')}"-->
+<!--                                            th:text="${error}"></li>-->
+<!--                                    </ul>-->
+
+                                    <div class="col-md-6 mb-4">
+                                        <span class="mb-2 pb-1">Leave Type* :&nbsp;</span>
+                                        <th:block th:each="leaveType : ${LeaveTypes}">
+                                            <div class="form-check form-check-inline">
+                                                <input
+                                                        class="form-check-input"
+                                                        type="radio"
+                                                        th:id="${leaveType}"
+                                                        th:value="${leaveType}"
+                                                        th:field="*{leaveType}"
+                                                        th:errorclass="is-invalid"
+                                                />
+                                                <label class="form-check-label" th:for="${leaveType}"
+                                                       th:text="${leaveType}"></label>
+                                            </div>
+                                        </th:block>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('leaveType')}">
+                                            <li th:each="error : ${#fields.errors('leaveType')}" th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+                                        <div class="form-outline datepicker w-100">
+                                            <input type="text" class="form-control form-control-lg" id="leaveFromDate"
+                                                   title="Enter Birth Date"
+                                                   th:field="*{leaveFromDate}"
+                                                   data-mdb-toggle="datepicker"
+                                            />
+                                            <label for="leaveFromDate" class="form-label">From*</label>
+                                        </div>
+<!--                                        <span th:if="${#fields.hasErrors('leaveFromDate')}" th:errors="*{leaveFromDate}"-->
+<!--                                              class="text-danger"></span>-->
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('leaveFromDate')}">
+                                            <li th:each="error : ${#fields.errors('leaveFromDate')}" th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+                                        <div class="form-outline datepicker w-100">
+                                            <input type="text" class="form-control form-control-lg" id="leaveToDate"
+                                                   title="Enter Birth Date"
+                                                   th:field="*{leaveToDate}"
+
+                                                   data-mdb-toggle="datepicker"
+                                            />
+                                            <label for="leaveToDate" class="form-label">To*</label>
+                                        </div>
+<!--                                        <span th:if="${#fields.hasErrors('leaveToDate')}" th:errors="*{leaveToDate}"-->
+<!--                                              id="leave-to-date"-->
+<!--                                              class="text-danger"></span>-->
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('leaveToDate')}">
+                                            <li th:each="error : ${#fields.errors('leaveToDate')}" th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <textarea class="form-control" id="description"
+                                                      title="Enter Description"
+                                                      th:field="*{description}"
+                                                      rows="2"
+                                            ></textarea>
+                                            <label class="form-label" for="description">Enter Description*</label>
+                                        </div>
+<!--                                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"-->
+<!--                                              class="text-danger"></span>-->
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('description')}">
+                                            <li th:each="error : ${#fields.errors('description')}" th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+</body>
+</html>

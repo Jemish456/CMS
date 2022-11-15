@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Drug List</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+
+    <!--    <div th:if="${#lists.isEmpty(prescriptionDrugList)}" class="text-center">-->
+    <!--        <h4>No Drug Found !!</h4>-->
+    <!--    </div>-->
+    <div class="mt-4">
+        <h2 class="mb-4 pb-2 pb-md-0 mb-md-3 text-capitalize" style="text-align: center">Appointment Details</h2>
+    </div>
+
+    <section>
+        <div class="container py-2 h-100">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-lg-10">
+                    <div class="card mb-4 shadow-2-strong">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Patient Name</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0 text-capitalize"
+                                       th:text="${patient.firstName + ' '
+                                            + patient.middleName + ' '
+                                            + patient.lastName}"></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Description</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0" th:text="${appointment.description}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="text-center m-3">
+        <a th:href="@{/doctor/prescription/drug/add(prescriptionId=${param.prescriptionId})}"
+           class="btn btn-primary mb-3">
+            Add Drug
+        </a>
+        <a th:href="@{/appointment/view(appointmentId=${appointmentId})}" class="btn btn-primary  mb-3">
+            View Appointment
+        </a>
+    </div>
+    <!--    <div th:if="${#lists.isEmpty(prescriptionDrugList)}" class="text-center">-->
+    <!--        <h4>No Drug Found !!</h4>-->
+    <!--    </div>-->
+    <div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered mt-1"
+                           th:if="${not #lists.isEmpty(prescriptionDrugList)}">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Drug Name</th>
+                            <th>Days</th>
+                            <th>Morning</th>
+                            <th>Noon</th>
+                            <th>Evening</th>
+                            <th>Action</th>
+
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+
+                        <tr th:each="prescriptionDrug :${prescriptionDrugList}">
+
+                            <td th:text="${prescriptionDrug.medicineName}"/>
+                            <td th:text="${prescriptionDrug.days}"/>
+                            <td th:text="${prescriptionDrug.morningDose}"/>
+                            <td th:text="${prescriptionDrug.afternoonDose}"/>
+                            <td th:text="${prescriptionDrug.eveningDose}"/>
+
+
+                            <!-- Add update button/link -->
+                            <td>
+                                <a th:href="@{/doctor/prescription/drug/update(drugId=${prescriptionDrug.id})}"
+                                   title="Edit"
+                                   class="btn btn-info mb-1">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a th:href="@{/doctor/prescription/drug/delete(drugId=${prescriptionDrug.id})}"
+                                   class="btn btn-danger mb-1"
+                                   title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

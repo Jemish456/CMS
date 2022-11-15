@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
+    <div class="container">
+        <!-- Navbar brand -->
+        <a class="navbar-brand me-2" th:href="@{/}">
+            <!--            <img-->
+            <!--                    src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"-->
+            <!--                    height="16"-->
+            <!--                    alt="MDB Logo"-->
+            <!--                    loading="lazy"-->
+            <!--                    style="margin-top: -1px;"-->
+            <!--            />-->
+            CMS
+        </a>
+        <!-- Toggle button -->
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#navbarButtonsExample"
+                aria-controls="navbarButtonsExample"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">Home</a>
+                    </li>
+                </th:block>
+
+                <th:block sec:authorize="hasRole('DOCTOR')">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/doctor/patient/list}">Patient List</a>
+                    </li>
+
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="navbarDropdownMenuLink"
+                           role="button"
+                           data-mdb-toggle="dropdown"
+                           aria-expanded="false">
+                            Appointment
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" th:href="@{/appointment/pending/list}">Pending List</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/appointment/approved/list}">Approved List</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/appointment/closed/list}">Closed List</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/doctor/drug/list}">Drug List</a>
+                    </li>
+
+                </th:block>
+
+                <th:block sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/panel}">Admin Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/staff/list}">Staff Member List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/holiday/show}">Holiday List</a>
+                    </li>
+                </th:block>
+
+                <th:block sec:authorize="hasRole('PATIENT')">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/patient/doctor/list}">Doctor List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/appointment/details}">My Appointments</a>
+                    </li>
+                </th:block>
+
+<!--                <th:block sec:authorize="hasRole('STORE')">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" th:href="@{/store/inventory}">Inventory</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" th:href="@{/store/showInvoiceForm}">POS</a>-->
+<!--                    </li>-->
+<!--                </th:block>-->
+            </ul>
+            <!-- Left links -->
+
+            <div class="d-flex align-items-center">
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a role="button" class="btn btn-link px-3 me-2" th:href="@{/login}">
+                        Login
+                    </a>
+                    <a role="button" class="btn btn-primary me-3" th:href="@{/registerDoctor}">
+                        Register Doctor
+                    </a>
+                    <a role="button" class="btn btn-primary me-3" th:href="@{/registerPatient}">
+                        Register Patient
+                    </a>
+                </th:block>
+                <!-- Avatar -->
+                <div class="dropdown" sec:authorize="isAuthenticated()">
+                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                       href="#"
+                       id="navbarDropdownMenuAvatar"
+                       role="button"
+                       data-mdb-toggle="dropdown"
+                       aria-expanded="false">
+                        <img
+                                th:src="@{/display/image/(id=${#authentication.getPrincipal().id})}"
+                                class="rounded-circle"
+                                height="35"
+                                width="35"
+                                alt="Profile Photo"
+                                loading="lazy"/>
+                        <i class="fas fa-user" sec:authorize="isAnonymous()"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg-end"
+                        aria-labelledby="navbarDropdownMenuAvatar">
+                        <th:block sec:authorize="hasRole('DOCTOR')">
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/doctor/view(id = ${#authentication.getPrincipal().getId()})}">My
+                                    profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/doctor/blockage/add}">My Blockage</a>
+                            </li>
+                        </th:block>
+
+                        <th:block sec:authorize="hasRole('PATIENT')">
+                            <li sec:authorize="hasRole('PATIENT')">
+                                <a class="dropdown-item"
+                                   th:href="@{/patient/view(id = ${#authentication.getPrincipal().getId()})}">My
+                                    profile</a>
+                            </li>
+                        </th:block>
+
+                        <th:block sec:authorize="hasRole('ADMIN')">
+                            <li sec:authorize="hasRole('ADMIN')">
+                                <a class="dropdown-item" th:href="@{/admin/leave/manage}">Leave Manage</a>
+                            </li>
+                        </th:block>
+
+                        <th:block sec:authorize="isAuthenticated()">
+                            <li sec:authorize="isAuthenticated()">
+                                <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+</body>
+</html>

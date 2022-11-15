@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Edit Holiday</title>
+    <th:block layout:fragment="otherCSSResources">
+    </th:block>
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main layout:fragment="content">
+    <!--Page Content-->
+
+    <section>
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Add Holiday</h3>
+
+                            <form method="post" th:action="@{/holiday/edit}" th:object="${holiday}">
+                                <input type="hidden" th:field="*{id}">
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label for="date" class="form-label">Date</label>
+                                        <input type="text" class="form-control form-control-lg" id="date"
+                                               title="Choose Date"
+                                               th:errorclass="is-invalid"
+                                               data-mdb-toggle="datepicker"
+                                               th:field="*{date}"
+                                        />
+                                        <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"
+                                              class="text-danger"></span>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('date')}">
+                                            <li th:each="error : ${#fields.errors('date')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+<!--                                    <div class="col-md-6 mb-4">-->
+<!--                                        <label for="toDate" class="form-label">To Date</label>-->
+<!--                                        <input type="text" class="form-control form-control-lg" id="toDate"-->
+<!--                                               title="Choose To Date"-->
+<!--                                               required-->
+<!--                                               data-mdb-toggle="datepicker"-->
+<!--                                               th:field="*{toDate}"-->
+<!--                                        />-->
+<!--                                        <span th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"-->
+<!--                                              class="text-danger"></span>-->
+<!--                                    </div>-->
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="text" class="form-control form-control-lg"
+                                                   title="Holiday name"
+                                                   th:field="*{name}"
+                                                   th:errorclass="is-invalid"
+                                            />
+                                            <label class="form-label">Name</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('name')}">
+                                            <li th:each="error : ${#fields.errors('name')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <select class="select form-control-lg"
+                                                data-mdb-clear-button="true"
+                                                data-mdb-filter="true"
+                                                th:field="*{type}"
+                                                th:errorclass="is-invalid"
+                                        >
+                                            <option th:each="typ: ${type}"
+                                                    th:value="${typ}"
+                                                    th:text="${typ}"
+                                            >
+                                            </option>
+                                        </select>
+                                        <label class="form-label select-label">Select Type</label>
+                                    </div>
+                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('type')}">
+                                        <li th:each="error : ${#fields.errors('type')}"
+                                            th:text="${error}"></li>
+                                    </ul>
+                                </div>
+
+                                <div class="mt-2 pt-2">
+                                    <input class="btn btn-danger btn-lg" type="reset" value="Reset"/>
+                                    <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<div layout:fragment="otherJSResources">
+    <script type="text/javascript" th:src="@{/js/date.js}"> </script>
+</div>
+</body>
+</html>

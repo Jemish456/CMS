@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Verify-Success</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main align="center" layout:fragment="content">
+    <!--Page Content-->
+    <div class="container text-center mt-3 mb-3">
+        <h3>Congratulations, your account has been verified.</h3>
+        <h4><a th:href="@{/login}">Click here to Login</a></h4>
+    </div>
+</main>
+
+</body>
+</html>

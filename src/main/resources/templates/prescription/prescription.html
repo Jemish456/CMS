@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        h1{
+            color: brown;
+        }
+        .prescriptionPdf {
+            width: 100%;
+        }
+        .prescriptionPdf, .prescriptionPdf th, .prescriptionPdf td {
+            border: 1px solid brown;
+            border-collapse: collapse;
+        }
+        .prescriptionPdf th {
+            background-color: brown;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1>Prescription</h1>
+<table>
+    <tr>
+        <td th:text="${'Dr. '+appointment.doctor.firstName+' '+appointment.doctor.lastName}"></td>
+    </tr>
+    <tr>
+        <td th:text="${'Patient Name : '+appointment.patient.firstName+' '+appointment.patient.lastName}"></td>
+    </tr>
+    <tr>
+        <td th:text="'Description : '+${prescription.description}"></td>
+    </tr>
+</table>
+<br />
+<table class="prescriptionPdf">
+    <tr>
+        <th>Medicine Name</th>
+        <th>Morning Dose</th>
+        <th>AfterNoon Dose</th>
+        <th>Evening Dose</th>
+        <th>Days</th>
+    </tr>
+    <tr th:each="drug :${drugList}">
+        <td th:text="${drug.medicineName}" />
+        <td th:text="${drug.morningDose}" />
+        <td th:text="${drug.afternoonDose}" />
+        <td th:text="${drug.eveningDose}" />
+        <td th:text="${drug.days}" />
+    </tr>
+</table>
+</body>
+</html>

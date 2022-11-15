@@ -1,0 +1,33 @@
+#outer {
+    position: absolute;
+    width: 250px;
+    height: 20px;
+    border: 1px solid #d8d8d8;
+}
+
+#inner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2e/Star.png');
+    background-repeat: repeat;
+    z-index: 5;
+}
+
+#overlay {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 10;
+}
+
+.star span:before {
+    content: "\2605";
+    position: absolute;
+    width: 70%;
+    background-color:#339966;
+}

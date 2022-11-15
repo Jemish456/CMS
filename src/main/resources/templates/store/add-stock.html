@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Add Item</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+
+    </div>
+</header>
+<main layout:fragment="content">
+    <!--Page Content-->
+    <section class="gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="back-btn-div">
+                                <a class="back-btn" th:href="@{/store/inventory}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                         class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                </a>
+                                <h3 style="color: black" class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Add Item</h3>
+                            </div>
+                            <form method="post" th:action="@{/store/addStockItem}"
+                                  th:object=" ${stockItem}" enctype="multipart/form-data"
+                                  onsubmit="return validateForm(this)">
+                                <input type="hidden" th:field="*{id}"/>
+                                <div class="text-right">
+                                    <a th:href="@{/store/inventoryList}"
+                                       class="btn btn-primary mb-3">
+                                        Add Inventory
+                                    </a>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <select th:field="*{Inventory}"
+                                                data-mdb-clear-button="true"
+                                                data-mdb-filter="true"
+                                                name="itemName" class="select form-control-lg" id="inventory">
+                                            <option
+                                                    th:each="inventory : ${inventoryList}"
+                                                    th:value="${inventory.id}"
+                                                    th:text="${inventory.name + '-' + inventory.company + '-' + inventory.power }"
+                                            >
+                                            </option>
+                                        </select>
+                                        <!--                                        <span th:if="${#fields.hasErrors('itemName')}" th:errors="*{inventory}"-->
+                                        <!--                                              class="text-danger"></span>-->
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <input type="text" id="qty" class="form-control"
+                                                   title="days"
+                                                   th:field="*{Qty}"
+                                            />
+                                            <label class="form-label" for="qty">Quantity</label>
+                                        </div>
+                                        <span th:if="${#fields.hasErrors('Qty')}" th:errors="*{Qty}"
+                                              class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline datepicker w-100">
+                                            <input type="text" class="form-control form-control-lg" id="expiryDate"
+                                                   title="Enter Birth Date"
+                                                   th:field="*{expiryDate}"
+                                                   data-mdb-toggle="datepicker"
+                                            />
+                                            <label for="expiryDate" class="form-label">Expiry Date</label>
+                                        </div>
+                                        <span th:if="${#fields.hasErrors('expiryDate')}" th:errors="*{expiryDate}"
+                                              class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <input type="text" id="buyingPrice" class="form-control"
+                                                   title="buyingPrice"
+                                                   th:field="*{buyingPrice}"
+                                            />
+                                            <label class="form-label" for="qty">Buying Price</label>
+                                        </div>
+                                        <span th:if="${#fields.hasErrors('buyingPrice')}" th:errors="*{buyingPrice}"
+                                              class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <input type="text" id="sellingPrice" class="form-control"
+                                                   title="sellingPrice"
+                                                   th:field="*{sellingPrice}"
+                                            />
+                                            <label class="form-label" for="qty">Selling Price</label>
+                                        </div>
+                                        <span th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}"
+                                              class="text-danger"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="mt-2 pt-2">
+                                    <button type="submit" class="btn btn-primary col-2">Add</button>
+                                    <a class="btn btn-success" th:href="@{/store/stockList}">
+                                        Done
+                                    </a>
+                                    <!--                                    <a class="btn btn-primary" th:href="@{/store/inventoryList}">-->
+                                    <!--                                        Add Inventory-->
+                                    <!--                                    </a>-->
+                                </div>
+                            </form>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-10">
+                                    <div class="table-responsive">
+                                        <table id="table" class="table  table-hover table-bordered mt-5"
+                                               th:if="${not #lists.isEmpty(stockItems)}">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Sr. No</th>
+                                                <th id="medicineName" scope="col">Item Name</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Sell price</th>
+                                                <th scope="col">Buy price</th>
+                                                <th scope="col">Expiry Date</th>
+                                                <th scope="col">Company Name</th>
+                                                <th scope="col">Power</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                            <tr th:each="stock,iterator :${stockItems}">
+
+                                                <td th:text="${iterator.index+1}"></td>
+                                                <td th:text="${stock.inventory.name}"/>
+                                                <td th:text="${stock.qty}"/>
+                                                <td th:text="${stock.sellingPrice}"/>
+                                                <td th:text="${stock.buyingPrice}"/>
+                                                <td th:text="${stock.expiryDate}"/>
+                                                <td th:text="${stock.inventory.company}"/>
+                                                <td th:text="${stock.inventory.power}"/>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<!--<div layout:fragment="otherJSResources">-->
+<!--    <script type="text/javascript" th:src="@{/js/item-list.js}"> </script>-->
+<!--</div>-->
+</body>
+</html>
+
+

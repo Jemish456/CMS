@@ -1,0 +1,44 @@
+h1 {
+    color: darkslategrey;
+}
+
+.loader {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    margin-top: 0px;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main.container {
+    min-height: 75vh;
+}
+.back-btn-div{
+    display: flex;
+    gap: 20px;
+}
+.back-btn{
+    color: black;
+    font-size: 24px;
+}
+.back-btn:hover{
+    color: darkcyan;
+    transform: scale(1.1);
+}
+
+footer{
+    height: 55px;
+}
+
+.file-upload-wrapper{
+    border-style: dashed;
+    border-width: thin;
+}
+.margin-inline-auto{
+    margin-inline: auto;
+}

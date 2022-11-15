@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Staff List</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/add-review.css}">
+
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 class="mt-4 mb-3">Staff Members</h1>
+        <a class="btn btn-primary mt-1"
+           th:href="@{/staff/add}">
+            Add Member
+        </a>
+        <a class="btn btn-primary mt-1"
+           th:href="@{/staff/leave/apply}">Apply Leave
+        </a>
+        <a class="btn btn-primary mt-1"
+           th:href="@{/tax/section}">
+            Tax Section
+        </a>
+        <a class="btn btn-primary mt-1"
+           th:href="@{/staff/salary}">
+            Staff Salary
+        </a>
+        <a class="btn btn-primary mt-1">
+            Tax
+        </a>
+        <a class="btn btn-primary mt-1"
+           th:href="@{/staff/attendance/view}">View Attendance
+        </a>
+
+        <hr class="mt-4">
+    </div>
+
+    <div th:if="${#lists.isEmpty(members)}" class="text-center">
+        <h2>No Member Found !!</h2>
+    </div>
+    <table col-8 col-lg-10 col-xl-10 table-responsive table-hover table-bordered mt-5 mb-5
+           th:if="${not #lists.isEmpty(members)}">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Role</th>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile Number</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody id="doctorListTableBody">
+        <tr th:each="member : ${members}">
+<!--            th:if="${member.getFirstName() == 'Vasu'}"-->
+
+            <td class="text-capitalize" th:text="${member.memberRole}"></td>
+            <td class="text-capitalize" th:text="${member.firstName+' '+member.lastName}"></td>
+            <td th:text="${member.mobileNumber}"></td>
+            <td>
+                <a class="btn btn-info"
+                   title="View Member"
+                   th:href="@{/staff/details(memberId = ${member.id})}">
+                    <i class="fa fa-eye"></i>
+                </a>
+                <a class="btn btn-danger"
+                   th:href="@{/staff/delete(memberId = ${member.id})}">Remove
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

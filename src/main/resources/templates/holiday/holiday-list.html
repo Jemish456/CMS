@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Holidays</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 class="m-2">Holiday List</h1>
+        <hr class="mt-2">
+    </div>
+
+    <div th:if="${#lists.isEmpty(holidays)}" class="text-center">
+        <h5>No Holiday Found !!</h5>
+    </div>
+
+    <div class="text-center mb-4">
+        <a class="btn btn-primary mt-1"
+           th:href="@{/holiday/add}">Add Holiday
+        </a>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered mt-5"
+                       th:if="${not #lists.isEmpty(holidays)}">
+
+
+                    <thead class="table-dark">
+                    <!--        <h2 class="text-center">Holiday</h2>-->
+                    <tr>
+                        <!--            <th></th>-->
+                        <th colspan="6" class="text-center .bg-warning.bg-gradient">Annual year [[${year}]]'s Holiday
+                            List
+                        </th>
+                        <!--            <th></th>-->
+                    </tr>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Holiday Name</th>
+                        <!--            <th scope="col">Day/s</th>-->
+                        <th scope="col">Day of week</th>
+                        <th scope="col">Holiday Type</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="holiday : ${holidays}">
+                        <!--            onloadeddata="listDays()"-->
+                        <td th:text="${#dates.format(holiday.getDate(), 'dd-MM-yyyy')}"></td>
+                        <td th:text="${holiday.getName()}"></td>
+                        <!--            <td th:text="${holiday.days}"></td>-->
+                        <td th:text="${#dates.dayOfWeekName(holiday.getDate())}"></td>
+                        <td th:text="${holiday.getType()}"></td>
+                        <td>
+                            <a class="btn btn-info"
+                               th:href="@{/holiday/edit(holidayId = ${holiday.id})}">
+                                Edit
+                            </a>
+
+                            <a class="btn btn-success"
+                               th:href="@{/holiday/delete(holidayId = ${holiday.id})}">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

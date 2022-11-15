@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Dashboard</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+    </div>
+</header>
+<main layout:fragment="content">
+    <!--Page Content-->
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-lg-10 mt-4">
+            <div class="card mb-4">
+                <div class="card-body shadow-lg bg-body rounded">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Total Doctor</p>
+                        </div>
+                        <div class="col-sm-8">
+                             <p>[[${totalDoctor}]]</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Total Patient</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>[[${totalPatient}]]</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Total Staff</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>[[${totalStaffMembers}]]</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Pending Appointment List</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>[[${totalPendingAppointment}]]</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Approved Appointment List</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>[[${totalApprovedAppointment}]]</p>
+                        </div>
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-4">-->
+<!--                            <a class="btn btn-primary"-->
+<!--                               th:href="@{/staff/add}">-->
+<!--                                Add Staff Member-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <hr>-->
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="mb-0">Closed Appointment List</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>[[${totalClosedAppointment}]]</p>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+</body>
+</html>

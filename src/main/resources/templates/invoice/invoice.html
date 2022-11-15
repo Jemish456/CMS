@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <style>
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        a {
+            color: #0087C3;
+            text-decoration: none;
+        }
+
+        hr { /* settings for horizontal rule */
+            padding: 0px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+            border: none;
+            height: 1px;
+            /* Set the hr color */
+            color: black; /* old IE */
+            background-color: black; /* Modern Browsers */
+        }
+
+        body {
+            position: relative;
+            width: 21cm;
+            height: 29.7cm;
+            margin: 0 auto;
+            color: #555555;
+            background: #FFFFFF;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-family: SourceSansPro;
+        }
+
+        header {
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #AAAAAA;
+        }
+
+        #logo {
+            float: left;
+            margin-top: 8px;
+        }
+
+        #logo img {
+            height: 70px;
+        }
+
+        #company {
+            float: left;
+            text-align: left;
+        }
+
+
+        #details {
+            margin-bottom: 50px;
+        }
+
+        #client {
+            padding-left: 6px;
+            border-left: 6px solid #0087C3;
+            float: left;
+        }
+
+        #client .to {
+            color: #777777;
+        }
+
+        h2.name {
+            font-size: 1.4em;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        #invoice {
+            padding-right: 120px;
+            float: right;
+            text-align: left;
+        }
+
+        #invoice h1 {
+            color: #0087C3;
+            font-size: 2.4em;
+            line-height: 1em;
+            font-weight: normal;
+            margin: 0 0 10px 0;
+        }
+
+        #invoice .date {
+            font-size: 1.1em;
+            color: #777777;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-bottom: 20px;
+        }
+
+        table th,
+        table td {
+            padding: 20px;
+            background: #EEEEEE;
+            text-align: center;
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        table th {
+            white-space: nowrap;
+            font-weight: normal;
+        }
+
+        table td {
+            text-align: right;
+        }
+
+        table td h3 {
+            color: #57B223;
+            font-size: 1.2em;
+            font-weight: normal;
+            margin: 0 0 0.2em 0;
+        }
+
+        table .no {
+            color: #FFFFFF;
+            font-size: 1.6em;
+            background: #57B223;
+            text-align: center;
+        }
+
+        table .desc {
+            text-align: left;
+        }
+
+        table .unit {
+            background: #DDDDDD;
+        }
+
+        table .qty {
+        }
+
+        table .total {
+            background: #57B223;
+            color: #FFFFFF;
+        }
+
+        table td.unit,
+        table td.qty,
+        table td.total,
+        table td.no {
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        table tbody tr:last-child td {
+            border: none;
+        }
+
+        table tfoot td {
+            padding: 10px 20px;
+            background: #FFFFFF;
+            border-bottom: none;
+            font-size: 1.2em;
+            white-space: nowrap;
+            border-top: 1px solid #AAAAAA;
+        }
+
+        table tfoot tr:first-child td {
+            border-top: none;
+        }
+
+        table tfoot tr:last-child td {
+            color: #57B223;
+            font-size: 1.4em;
+            border-top: 1px solid white;
+
+        }
+
+        table tfoot tr td:first-child {
+            border: none;
+        }
+
+        #thanks {
+            font-size: 2em;
+            margin-bottom: 50px;
+        }
+
+        #notices {
+            padding-left: 6px;
+            border-left: 6px solid #0087C3;
+        }
+
+        #notices .notice {
+            font-size: 1.2em;
+        }
+
+        footer {
+            color: #777777;
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            bottom: 0;
+            border-top: 1px solid #AAAAAA;
+            padding: 8px 0;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="clearfix">
+    <div>
+        <!--        <form method="post" th:action="@{/appointment/invoice/download(appointmentId = ${param.appointmentId})}"-->
+        <!--              th:object="${invoice}">-->
+        <!--            <input type="hidden" name="appointment" th:value="${param.appointmentId}"/>-->
+        <!--            <input type="hidden" name="doctor" th:value="${invoice.doctor.id}"/>-->
+        <!--            <input type="hidden" name="patient" th:value="${invoice.patient.id}"/>-->
+        <!--            <button type="submit" class="btn bg-white btn-light mx-1px text-95">Download</button>-->
+        <!--        </form>-->s
+        <a class="btn btn-primary"
+           th:href="@{/appointment/invoice/download(appointmentId = ${param.appointmentId})}">
+            Download
+        </a>
+    </div>
+    <hr/>
+    <div id="company">
+        <h2 class="name" th:text="${'Dr. '+invoice.doctor.firstName+' '+invoice.doctor.lastName}"></h2>
+        <div>455 Foggy Heights, AZ 85004, US</div>
+        <div><span th:text="${invoice.doctor.mobileNumber}"></span></div>
+        <div><a href="mailto:company@example.com" th:text="${invoice.doctor.email}"></a></div>
+    </div>
+</header>
+<main>
+
+    <div id="details" class="clearfix">
+        <div id="client">
+            <div class="to">INVOICE TO:</div>
+            <h2 class="name" th:text="${invoice.patient.firstName+' '+invoice.patient.lastName}"></h2>
+            <div class="address"><span>796 Silver Harbour, TX 79273, US</span></div>
+            <div class="email"><span th:text="${invoice.patient.email}"></span></div>
+        </div>
+        <div id="invoice">
+            <h2 th:text="${'Invoice No : '+invoice.id}"></h2>
+            <div class="date">Date of Invoice: <span
+                    th:text="${#dates.format(#dates.createNow(), ' MMM,dd yyyy')}"></span></div>
+        </div>
+    </div>
+    <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="no">#</th>
+            <th class="desc">DESCRIPTION</th>
+            <th class="total">TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="no">1</td>
+            <td class="desc">Doctor Fee</td>
+            <td class="total" th:text="${invoice.doctor.fee}"></td>
+        </tr>
+        <tr th:each="item, iterStat: ${services}">
+            <td class="no" th:text="${iterStat.index + 2}"></td>
+            <td class="desc" th:text="${item.serviceName}"></td>
+            <td class="total" th:text=" '₹'+ ${item.cost}"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr style="margin-right: 120px ">
+            <td colspan="2">GRAND TOTAL</td>
+            <td th:text="'₹'+${invoice.totalAmount}"></td>
+            <td colspan="2"></td>
+        </tr>
+        </tfoot>
+    </table>
+    <div id="thanks">Thank you!</div>
+</main>
+</body>
+</html>

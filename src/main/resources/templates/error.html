@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Error</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+<!--        extra header content-->
+    </div>
+</header>
+<main layout:fragment="content" class="container">
+<!--Page Content-->
+
+    <div class="text-center mb-5">
+        <h1 class="m-5 text-danger">
+            Something went wrong !!
+        </h1>
+        <hr class="mt-5">
+        <p th:text="${message}">[[${message}}]]</p>
+    </div>
+</main>
+
+</body>
+</html>

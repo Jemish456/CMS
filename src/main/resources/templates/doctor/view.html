@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Doctor Details</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+    <th:block th:fragment="otherJSResources">
+        <!--        Page Specific JS -->
+    </th:block>
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content  -->
+    </div>
+</header>
+<main layout:fragment="content" class="container py-5" th:with="auth=${#authentication.getPrincipal()}">
+    <!--Page Content-->
+
+
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-lg-10">
+            <div class="card mb-4">
+                <div class="card-body">
+
+<!--                    BACK BUTTON             -->
+                    <div sec:authorize="hasRole('PATIENT')" style="margin-top: -35px; margin-bottom: 25px" class="back-btn-div">
+                        <a class="back-btn" th:href="@{/patient/doctor/list}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div sec:authorize="hasRole('DOCTOR')" style="margin-top: -35px; margin-bottom: 25px" class="back-btn-div">
+                        <a class="back-btn" th:href="@{/doctor}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-3">
+                        <div class="col-md-6 mb-4 text-center">
+                            <div class="rounded-circle">
+                                <img th:src="@{/display/image/(id=${param.id})}" class="rounded-circle" height="100px" width="100px"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-6 mb-4 text-center">
+                            <div class="text-center" th:if="${#strings.equalsIgnoreCase(param.id,auth.id)}">
+                                <a class="btn btn-primary"
+                                   th:href="@{/doctor/edit(id=${auth.id})}">
+                                    Edit <i class="far fa-edit"></i>
+                                </a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/updatePassword(id=${auth.id})}">
+                                    Update Password <i class="fa fa-lock"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${message != null}" class="row d-flex justify-content-center">
+                        <div class="col-12">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Password Changed Successfully.
+                                <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Doctor Name</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0 text-capitalize"
+                               th:text="${doctor.firstName + ' '
+                               + doctor.middleName + ' '
+                               + doctor.lastName}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${doctor.email}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Mobile</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="text-muted mb-0" th:text="${doctor.mobileNumber}"></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <th:block th:if="${doctor.yearOfExperience != 0}">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p class="mb-0">Years Of Experience</p>
+                            </div>
+                            <div class="col-sm-8">
+                                <p class="text-muted mb-0" th:text="${doctor.yearOfExperience}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                    </th:block>
+                    <th:block th:if="${doctor.specialization} ">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p class="mb-0">Specialization</p>
+                            </div>
+                            <div class="col-sm-8">
+                                <p class="text-muted mb-0" th:text="${doctor.specialization}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                    </th:block>
+                    <th:block th:if="${doctor.licence}">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p class="mb-0">Licence Number</p>
+                            </div>
+                            <div class="col-sm-8">
+                                <p class="text-muted mb-0" th:text="${doctor.licence}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                    </th:block>
+                    <th:block th:if="${doctor.fee}">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p class="mb-0">Service Fee</p>
+                            </div>
+                            <div class="col-sm-8">
+                                <p class="text-muted mb-0" th:text="${T(com.globalvox.clinicmanagementsystem.util.ServiceUtil).decimalFormatTwoDigit(doctor.fee)}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                    </th:block>
+                    <div class="row" >
+                        <div class="col-sm-8">
+                            <p class="mb-0">Reviews</p>
+                        </div>
+                        <div class="col-sm-8 mb-lg-4" style="margin-left: 100px">
+                            <a sec:authorize="hasRole('PATIENT')" class="btn btn-primary" th:href="@{/patient/doctor/review/reviewPage(doctorId = ${doctor.id},patientId = ${#authentication.getPrincipal().getId()})}">
+                                Add Review
+                            </a>
+                            <br/>
+                            <th:block th:each="singlereview : ${doctor.reviewList}">
+                                <hr>
+                                <p class="text-muted mb-0"
+                                   th:text="${singlereview.patient.firstName + '   '  + singlereview.rating}"></p>
+                                <p class="text-muted mb-0" th:text="${singlereview.description}"></p>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

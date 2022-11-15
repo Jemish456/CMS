@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Register Patient</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <!--        <link rel="stylesheet" type="text/css" th:href="@{/css/register-style.css}">-->
+    </th:block>
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+
+    </div>
+</header>
+<main layout:fragment="content">
+    <!--Page Content-->
+
+    <div class="mt-4 row d-flex justify-content-center align-items-center">
+        <div class="col-lg-10 back-btn-div" style="padding-left: 68px" sec:authorize="hasRole('DOCTOR')"><a class="back-btn justify-content-start"
+
+                                                                                th:if=" ${appointment.status.name() == 'APPROVED' }"
+                                                                                th:href="@{/appointment/view(appointmentId=${appointment.id})}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </a>
+            <h2 class="mb-4 pb-2 pb-md-0 mb-md-3 text-capitalize margin-inline-auto"
+                style="text-align: center; color: black">Appointment
+                Details</h2>
+        </div>
+    </div>
+    <!--        <div class="mt-4">-->
+    <!--            <h2 class="mb-4 pb-2 pb-md-0 mb-md-3 text-capitalize" style="text-align: center">Appointment-->
+    <!--                Details</h2>-->
+    <!--        </div>-->
+
+    <section>
+        <div class="container py-2 h-100">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card mb-4 shadow-2-strong">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Patient Name</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0 text-capitalize"
+                                       th:text="${patient.firstName + ' '
+                                            + patient.middleName + ' '
+                                            + patient.lastName}"></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Description</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0" th:text="${appointment.description}"></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <form method="post" th:action="@{/doctor/prescription/description}"
+                                  th:object=" ${prescription}" enctype="multipart/form-data">
+                                <input type="hidden" th:field="*{appointment.id}"/>
+                                <input type="hidden" th:field="*{id}"/>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-2 pb-2">
+                                        <div class="form-outline">
+                                            <textarea class="form-control" id="description"
+                                                      rows="3"
+                                                      title="Enter Description"
+                                                      th:field="*{description}"
+                                            ></textarea>
+                                            <label class="form-label" for="description">Enter
+                                                Description</label>
+                                        </div>
+                                        <span th:if="${#fields.hasErrors('description')}"
+                                              th:errors="*{description}"
+                                              class="text-danger"></span>
+                                    </div>
+                                    <div class="mt-2 pt-2">
+                                        <button type="submit" class="btn btn-info col-2">Next</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

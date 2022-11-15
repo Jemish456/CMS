@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Drug</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+
+    </div>
+</header>
+<main layout:fragment="content">
+
+    <div class="mt-4">
+        <h2 class="mb-4 pb-2 pb-md-0 mb-md-3 text-capitalize" style="text-align: center">Appointment Details</h2>
+    </div>
+
+    <section>
+        <div class="container py-2 h-100">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-lg-10">
+                    <div class="card shadow-2-strong">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Patient Name</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0 text-capitalize"
+                                       th:text="${patient.firstName + ' '+ patient.lastName}"></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Description</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0" th:text="${appointment.description}"></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Page Content-->
+    <section class="gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Drug</h3>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-10">
+                                    <div class="table-responsive">
+                                        <table id="table" class="table table-hover table-bordered mt-0"
+                                               th:if="${not #lists.isEmpty(prescriptionDrugList)}">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Sr. No</th>
+                                                <th id="medicineName" scope="col">Medicine Name</th>
+                                                <th scope="col">Days</th>
+                                                <th scope="col">Morning</th>
+                                                <th scope="col">Afternoon</th>
+                                                <th scope="col">Evening</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="prescriptionDrug,iterator  : ${prescriptionDrugList}">
+                                                <td th:text="${iterator.index+1}"></td>
+                                                <td th:text="${prescriptionDrug.medicineName}"/>
+                                                <td th:text="${prescriptionDrug.days}"></td>
+                                                <td th:text="${prescriptionDrug.morningDose}"></td>
+                                                <td th:text="${prescriptionDrug.afternoonDose}"></td>
+                                                <td th:text="${prescriptionDrug.eveningDose}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form method="post" th:action="@{/doctor/prescription/drug/save}"
+                                  th:object=" ${prescriptionDrug}" enctype="multipart/form-data"
+                                  onsubmit="return validateForm(this)">
+                                <input type="hidden" th:field="*{id}"/>
+                                <h6 class="text-primary">* Fields are required</h6>
+                                <input type="hidden" th:field="*{prescription.id}" th:value="${param.prescriptionId}"/>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 ">
+                                        <div class="input-group">
+                                            <select class="select" id="drugList"
+                                                    data-mdb-clear-button="true"
+                                                    data-mdb-filter="true"
+                                                    name="medicineName"
+                                                    aria-label="Select Drug"
+                                                    aria-describedby="drugListBtn">
+                                                <option
+                                                        th:field="*{medicineName}"
+                                                        th:each="drug :${drugList}"
+                                                        th:value="${drug.getName()+'-'+drug.getPower()}"
+                                                        th:text="${drug.getName()+'-'+drug.getPower()}"
+                                                >
+                                                </option>
+                                            </select>
+                                            <button type="button"
+                                                    class="btn btn-outline-dark"
+                                                    id="drugListBtn"
+                                                    data-bs-toggle="modal" data-bs-target="#addDrug">
+                                                Add
+                                            </button>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('medicineName')}">
+                                            <li th:each="error : ${#fields.errors('medicineName')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <input type="text" id="days" class="form-control"
+                                                   title="days"
+                                                   th:field="*{days}"
+                                                   th:errorclass="is-invalid"
+                                            />
+                                            <label class="form-label" for="days">days*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('days')}">
+                                            <li th:each="error : ${#fields.errors('days')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <h6 class="mb-2 pb-1">Morning Dose</h6>
+
+                                            <input type="radio" id="evening1" class="form-check-input"
+                                                   title="evening1" value="0"
+                                                   th:field="*{morningDose}"/>
+                                            <label for="evening1">0</label>
+
+                                            <input type="radio" id="evening2" class="form-check-input"
+                                                   title="evening2" value="1/2"
+                                                   th:field="*{morningDose}"/>
+                                            <label for="evening2">1/2</label>
+
+                                            <input type="radio" id="evening" class="form-check-input"
+                                                   title="evening" value="1"
+                                                   th:field="*{morningDose}"
+                                            />
+                                            <label for="evening">1</label>
+
+                                            <!--                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('morningDose')}">-->
+                                            <!--                                        <li th:each="error : ${#fields.errors('morningDose')}"-->
+                                            <!--                                            th:text="${error}"></li>-->
+                                            <!--                                    </ul>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <h6 class="mb-2 pb-1">Afternoon Dose</h6>
+
+                                            <input type="radio" id="evening1" class="form-check-input"
+                                                   title="evening1" value="0"
+                                                   th:field="*{afternoonDose}"/>
+                                            <label for="evening1">0</label>
+
+                                            <input type="radio" id="evening2" class="form-check-input"
+                                                   title="evening2" value="1/2"
+                                                   th:field="*{afternoonDose}"/>
+                                            <label for="evening2">1/2</label>
+
+                                            <input type="radio" id="evening" class="form-check-input"
+                                                   title="evening" value="1"
+                                                   th:field="*{afternoonDose}" required/>
+                                            <label for="evening">1</label>
+
+                                        </div>
+                                        <!--                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('afternoonDose')}">-->
+                                        <!--                                            <li th:each="error : ${#fields.errors('afternoonDose')}"-->
+                                        <!--                                                th:text="${error}"></li>-->
+                                        <!--                                        </ul>-->
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <h6 class="mb-2 pb-1">Evening Dose</h6>
+
+                                            <input type="radio" class="form-check-input"
+                                                   title="evening1" value="0"
+                                                   th:field="*{eveningDose}"/>
+                                            <label for="evening1">0</label>
+
+                                            <input type="radio" class="form-check-input"
+                                                   title="evening2" value="1/2"
+                                                   th:field="*{eveningDose}"/>
+                                            <label for="evening2">1/2</label>
+
+                                            <input type="radio" id="evening" class="form-check-input"
+                                                   title="evening" value="1"
+                                                   th:field="*{eveningDose}" required/>
+                                            <label for="evening">1</label>
+
+                                        </div>
+                                        <!--                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('eveningDose')}">-->
+                                        <!--                                        <li th:each="error : ${#fields.errors('eveningDose')}"-->
+                                        <!--                                            th:text="${error}"></li>-->
+                                        <!--                                    </ul>-->
+                                    </div>
+                                </div>
+                                <div class="row col m-2">
+                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('morningDose')}">
+                                        <li th:each="error : ${#fields.errors('morningDose')}"
+                                            th:text="${error}"></li>
+                                    </ul>
+                                </div>
+                                <!--                                <div class="text-right">-->
+                                <!--                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('morningDose')}">-->
+                                <!--                                        <li th:each="error : ${#fields.errors('morningDose')}"-->
+                                <!--                                            th:text="${error}"></li>-->
+                                <!--                                    </ul>-->
+                                <!--                                </div>-->
+                                <div class="mt-2 pt-2">
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <a class="btn btn-success"
+                                       th:href="@{/doctor/prescription/drug/list(prescriptionId=${param.prescriptionId})}">
+                                        Done
+                                    </a>
+                                </div>
+
+                            </form>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="addDrug" tabindex="-1" aria-labelledby="addDrug"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form method="post"
+                                              th:action="@{/doctor/drug/save/model(prescriptionId=${param.prescriptionId})}"
+                                              th:object="${drug}">
+                                            <input type="hidden" th:field="*{id}"/>
+                                            <script th:inline="javascript">
+                                                var addDrugError = /*[[ ${#fields.hasAnyErrors() || (error!=null)}]]*/ "false";
+                                            </script>
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addSymptomsLabel">Add Drug</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                                                     th:if="${error!=null}">
+                                                    <th:block th:text="${error}"></th:block>
+                                                </div>
+                                                <h6 class="text-primary">* Fields are required</h6>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4 pb-2">
+                                                        <div class="form-outline">
+                                                            <input type="text" id="name" class="form-control"
+                                                                   title="name"
+                                                                   th:field="*{name}"
+                                                                   th:errorclass="is-invalid"
+                                                            />
+                                                            <label class="form-label" for="name">Medicine Name*</label>
+                                                        </div>
+                                                        <ul class="text-danger form-text"
+                                                            th:if="${#fields.hasErrors('name')}">
+                                                            <li th:each="error : ${#fields.errors('name')}"
+                                                                th:text="${error}"></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-4 pb-2">
+                                                        <div class="form-outline">
+                                                            <input type="text" id="power" class="form-control"
+                                                                   title="power"
+                                                                   th:field="*{power}"
+                                                                   th:errorclass="is-invalid"
+                                                            />
+                                                            <label class="form-label" for="power">Power*</label>
+                                                        </div>
+                                                        <ul class="text-danger form-text"
+                                                            th:if="${#fields.hasErrors('power')}">
+                                                            <li th:each="error : ${#fields.errors('power')}"
+                                                                th:text="${error}"></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col mb-4 pb-2">
+                                                        <div class="form-outline">
+                                                            <textarea type="text" class="form-control" id="description"
+                                                                      title="Enter Description"
+                                                                      th:field="*{description}"
+                                                                      th:errorclass="is-invalid"></textarea>
+                                                            <label for="description" class="form-label">Enter
+                                                                Description</label>
+                                                        </div>
+                                                        <ul class="text-danger form-text"
+                                                            th:if="${#fields.hasErrors('description')}">
+                                                            <li th:each="error : ${#fields.errors('description')}"
+                                                                th:text="${error}"></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<div layout:fragment="otherJSResources">
+    <script type="text/javascript" th:src="@{/js/drug-list.js}"></script>
+    <script th:inline="javascript">
+        $(document).ready(function (e) {
+            if (addDrugError == true) {
+                var myModal = new bootstrap.Modal(document.getElementById('addDrug'), {
+                    keyboard: false
+                });
+                myModal.show();
+            }
+        });
+    </script>
+</div>
+</body>
+</html>
+
+

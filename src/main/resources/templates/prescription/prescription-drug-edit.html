@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Drug</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+    </th:block>
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+
+    </div>
+</header>
+<main layout:fragment="content">
+    <!--Page Content-->
+    <section class="gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-8">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Drug</h3>
+                            <form method="post" th:action="@{/doctor/prescription/drug/save}"
+                                  th:object=" ${prescriptionDrug}" enctype="multipart/form-data"
+                                  onsubmit="return validateForm(this)">
+
+                                <input type="hidden" th:field="*{id}"/>
+                                <input type="hidden" th:field="*{prescription.id}" th:value="${param.prescriptionId}"/>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2 ">
+                                            <div class="form-outline">
+                                                <input type="text" id="medicineName" readonly class="form-control"
+                                                       th:field="*{medicineName}"
+                                                />
+                                                <label class="form-label" for="medicineName">Medicine Name*</label>
+                                            </div>
+                                        </div>
+
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <input type="text" id="days" class="form-control"
+                                                   title="days"
+                                                   th:field="*{days}"
+                                                   required
+                                            />
+                                            <label class="form-label" for="days">days*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('days')}">
+                                            <li th:each="error : ${#fields.errors('days')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <h6 class="mb-2 pb-1">Morning Dose</h6>
+
+                                            <input type="radio" id="evening1" class="form-check-input"
+                                                   title="evening1" value="0"
+                                                   th:field="*{morningDose}"/>
+                                            <label for="evening1">0</label>
+
+                                            <input type="radio" id="evening2" class="form-check-input"
+                                                   title="evening2" value="1/2"
+                                                   th:field="*{morningDose}"/>
+                                            <label for="evening2">1/2</label>
+
+                                            <input type="radio" id="evening" class="form-check-input"
+                                                   title="evening" value="1"
+                                                   th:field="*{morningDose}" required/>
+                                            <label for="evening">1</label>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <h6 class="mb-2 pb-1">Afternoon Dose</h6>
+
+                                            <input type="radio" id="evening1" class="form-check-input"
+                                                   title="evening1" value="0"
+                                                   th:field="*{afternoonDose}"/>
+                                            <label for="evening1">0</label>
+
+                                            <input type="radio" id="evening2" class="form-check-input"
+                                                   title="evening2" value="1/2"
+                                                   th:field="*{afternoonDose}"/>
+                                            <label for="evening2">1/2</label>
+
+                                            <input type="radio" id="evening" class="form-check-input"
+                                                   title="evening" value="1"
+                                                   th:field="*{afternoonDose}" required/>
+                                            <label for="evening">1</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <h6 class="mb-2 pb-1">Evening Dose</h6>
+
+                                        <input type="radio"  class="form-check-input"
+                                               title="evening1" value="0"
+                                               th:field="*{eveningDose}"/>
+                                        <label for="evening1">0</label>
+
+                                        <input type="radio"  class="form-check-input"
+                                               title="evening2" value="1/2"
+                                               th:field="*{eveningDose}"/>
+                                        <label for="evening2">1/2</label>
+
+                                        <input type="radio" id="evening" class="form-check-input"
+                                               title="evening" value="1"
+                                               th:field="*{eveningDose}" required/>
+                                        <label for="evening">1</label>
+
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('morningDose')}">
+                                        <li th:each="error : ${#fields.errors('morningDose')}"
+                                            th:text="${error}"></li>
+                                    </ul>
+                                </div>
+
+
+                                <div class="mt-2 pt-2">
+                                    <button  type="submit"  class="btn btn-primary">update</button>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<div layout:fragment="otherJSResources">
+    <script type="text/javascript" th:src="@{/js/drug-list.js}"> </script>
+</div>
+</body>
+</html>
+
+

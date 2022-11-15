@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Tax Section</title>
+    <link rel="icon" href="https://cdn-icons.flaticon.com/png/512/4263/premium/4263863.png?token=exp=1652333169~hmac=4ec401f4e6dacf3b4256fc60fbd1e035"
+          type="image/icon type">
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <!--        <link rel="stylesheet" type="text/css" th:href="@{/css/add-review.css}">-->
+    </th:block>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+        }
+
+        /* Clearfix (clear floats) */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .hidden{
+            display: none;
+        }
+    </style>
+    <script>
+        function selectOldSystem(){
+
+            var selectTaxSection=document.getElementById('sectionFrom');
+            selectTaxSection.classList.remove('hidden');
+        }
+        function selectNewSystem(){
+
+            var selectTaxSection=document.getElementById('sectionFrom');
+            selectTaxSection.classList.add('hidden');
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <section class="gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Tax Systems</h3>
+                            <form method="post" th:action="@{/tax/applySection}" th:object="${taxSection}">
+
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2 ">
+                                        <select class="select form-control-lg" id="staffMember"
+                                                th:field = "*{staffMember}"
+                                                data-mdb-clear-button="true"
+                                                data-mdb-filter="true"
+                                                name="staffMember" required >
+                                            <option
+                                                    th:each="member :${staffMemberList}"
+                                                    th:value="${member.getId()}"
+                                                    th:text="${member.getFirstName()+' - '+member.getId()}"
+                                            >
+                                            </option>
+                                        </select>
+                                        <label class="form-label select-label" for="staffMember">Select Member</label>
+                                    </div>
+                                    <input type="number" th:field="*{financialYear}" placeholder="Enter Financial Year" required/>
+                                </div>
+                                <input type="radio" th:field="*{taxSystem}" id="oldSystem" onclick="selectOldSystem()" name="tax" value="OLD" required>
+                                <label for="oldSystem">OLD</label>
+
+                                <input type="radio" th:field="*{taxSystem}" onclick="selectNewSystem()" id="new" name="tax" value="NEW">
+                                <label for="new">NEW</label>
+                                <br>
+                                <br>
+                                <div id="sectionFrom" class="hidden">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="number" class="form-control" id="standardDeduction"
+                                                       title="Standard Deduction"
+                                                       th:field = "*{standardDeduction}"
+                                                       max="50000"
+                                                       min="0"
+                                                />
+                                                <label class="form-label" for="standardDeduction">Standard Deduction*</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="number" class="form-control" id="pt"
+                                                       title="Professional Tax"
+                                                       th:field = "*{professionalTax}"
+                                                       max="2400"
+                                                       min="0"
+                                                />
+                                                <label class="form-label" for="pt">Professional Tax*</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="number" class="form-control" id="section80D"
+                                                       title="section80D"
+                                                       th:field = "*{section80D}"
+                                                       max="25000"
+                                                       min="0"
+                                                />
+                                                <label class="form-label" for="section80D">80D</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="number" class="form-control" id="section80C"
+                                                       title="section80C"
+                                                       th:field = "*{section80C}"
+                                                       max="150000"
+                                                       min="0"
+                                                />
+                                                <label class="form-label" for="section80C">80C</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <input type="number" class="form-control" id="section24B"
+                                                       title="section24B"
+                                                       th:field = "*{section24B}"
+                                                       max="200000"
+                                                       min="0"
+                                                />
+                                                <label class="form-label" for="section24B">24B</label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                    <br>
+                                <input class="btn btn-primary btn-lg mb-2" type="submit" value="Submit"/>
+                            </form>
+                            <div class="row">
+                                <div class="column">
+                                    <table>
+                                        <tr>
+                                            <th>Old Tax System Staff Member</th>
+                                        </tr>
+                                        <th:block th:each="member :${members}">
+                                            <tr th:if="${member.taxSystem == 'OLD'}">
+                                                <td>[[${member.getStaffMember().getFirstName()}]]</td>
+                                            </tr>
+                                        </th:block>
+
+                                    </table>
+                                </div>
+                                <div class="column">
+                                    <table>
+                                        <tr>
+                                            <th>Old Tax System Staff Member</th>
+                                        </tr>
+                                        <th:block th:each="member :${members}">
+                                            <tr th:if="${member.taxSystem == 'NEW'}">
+                                                <td>[[${member.getStaffMember().getFirstName()}]]</td>
+                                            </tr>
+                                        </th:block>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Drug List</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="text-center">
+        <h1 class="m-5">Drug List</h1>
+        <hr class="mt-5">
+        <a th:href="@{/doctor/drug/add}"
+           class="btn btn-primary mb-3">
+            Add Drug
+        </a>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table th:if="${not #lists.isEmpty(drugList)}" class="table  table-hover table-bordered mt-1">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Drug Name</th>
+                        <th>Power</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="drug :${drugList}">
+
+                        <td th:text="${drug.name}"/>
+                        <td th:text="${drug.power}"/>
+                        <td th:text="${drug.description}"/>
+
+                        <td>
+                            <a title="Edit" th:href="@{/doctor/drug/update(drugId=${drug.id})}"
+                               class="btn btn-info mb-1">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a title="Delete" th:href="@{/doctor/drug/delete(drugId=${drug.id})}"
+                               class="btn btn-danger mb-1">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

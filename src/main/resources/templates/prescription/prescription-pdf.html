@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        /*body,html{*/
+        /*    height: 100%;*/
+        /*}*/
+        h1, h3, h4 {
+            color: #000046;
+            text-align: center;
+        }
+
+        h3 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+            font-size: 25px;
+            text-decoration: underline;
+        }
+
+        .prescriptionPdf {
+            width: 100%;
+            margin-top: 20px;
+
+        }
+
+        .prescriptionPdf, .prescriptionPdf th, .prescriptionPdf td {
+            color: #000046;
+            border-collapse: collapse;
+            text-align: center;
+            border: 1px solid #000046;
+        }
+
+        .prescriptionPdf th {
+            background-color: #000046;
+            color: white;
+            text-align: center;
+        }
+
+        .header-logo img {
+            margin-left: auto;
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            top: 80px;
+            right: 0;
+        }
+
+        #thanks {
+            color: #000046;
+            font-size: 1.5em;
+            margin-bottom: 50px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<h1 th:text="${'Dr. '+appointment.doctor.firstName+' '+appointment.doctor.lastName}"></h1>
+<!--<h4 th:text="${appointment.doctor.mobileNumber}"></h4>-->
+<hr/>
+<table>
+
+    <tr>
+        <td th:text="${'Patient Name : '+appointment.patient.firstName+' '+appointment.patient.lastName}"></td>
+    </tr>
+    <tr>
+        <td th:text="'Phone Number : '+${appointment.patient.mobileNumber}"></td>
+    </tr>
+    <tr>
+        <td th:text="'Dob: '+${#dates.format(appointment.patient.dateOfBirth, 'dd-MM-yyyy')}"></td>
+    </tr>
+    <tr>
+        <td th:text="'Description : '+${prescription.description}"></td>
+    </tr>
+</table>
+<div class="header-logo ">
+    <img  src="src/main/resources/static/img/cms-logo.png"  alt="logo"/>
+</div>
+<br/>
+<h3>Prescription</h3>
+
+<table class="prescriptionPdf">
+    <tr>
+        <th>Medicine Name</th>
+        <th>Morning Dose</th>
+        <th>AfterNoon Dose</th>
+        <th>Evening Dose</th>
+        <th>Days</th>
+    </tr>
+    <tr th:each="drug :${drugList}">
+        <td th:text="${drug.medicineName}"/>
+        <td th:text="${drug.morningDose}"/>
+        <td th:text="${drug.afternoonDose}"/>
+        <td th:text="${drug.eveningDose}"/>
+        <td th:text="${drug.days}"/>
+    </tr>
+</table>
+<div id="thanks">Take Care!</div>
+</body>
+</html>

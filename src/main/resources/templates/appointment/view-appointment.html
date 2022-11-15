@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>View Appointment</title>
+</head>
+<body>
+<div layout:fragment="content" class="container py-2 h-100">
+
+
+    <!--        BACK BUTTON         -->
+
+    <div class="mt-4 row d-flex justify-content-center align-items-center">
+        <div class="col-lg-10 back-btn-div" sec:authorize="hasRole('DOCTOR')"><a class="back-btn justify-content-start"
+                                                                                 style="padding-left: 12px"
+                                                                                 th:if=" ${appointment.status.name() == 'APPROVED' }"
+                                                                                 th:href="@{/appointment/approved/list}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </a> <a class="back-btn justify-content-start" style="padding-left: 12px"
+                th:if=" ${appointment.status.name() == 'PENDING' }" th:href="@{/appointment/pending/list}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </a> <a class="back-btn justify-content-start" style="padding-left: 12px"
+                th:if=" ${appointment.status.name() == 'CLOSED' }" th:href="@{/appointment/closed/list}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </a>
+            <h2 class="mb-4 pb-2 pb-md-0 mb-md-3 text-capitalize margin-inline-auto"
+                style="text-align: center; color: black">Appointment Details</h2></div>
+        <div class="col-lg-10 back-btn-div" sec:authorize="hasRole('PATIENT')"><a class="back-btn justify-content-start"
+                                                                                  style="padding-left: 12px"
+                                                                                  th:href="@{/appointment/details}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+        </a>
+            <h2 class="mb-4 pb-2 pb-md-0 mb-md-3 text-capitalize margin-inline-auto"
+                style="text-align: center; color: black">Appointment Details</h2></div>
+    </div>
+    <!--        DOCTOR, PATIENT DETAILS AND DATE-TIME       -->
+    <section>
+        <div class="container py-2 h-100">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-lg-10">
+                    <div class="card mb-4 shadow-2-strong">
+                        <div class="card-body">
+
+                            <div class="row" sec:authorize="hasRole('PATIENT')">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Doctor Name</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0 text-capitalize"
+                                       th:text="${doctor.firstName + ' '
+                                            + doctor.middleName + ' '
+                                            + doctor.lastName}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row" sec:authorize="hasRole('DOCTOR')">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Patient Name</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0 text-capitalize"
+                                       th:text="${patient.firstName + ' '
+                                            + patient.middleName + ' '
+                                            + patient.lastName}"></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Status</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0" th:text="${appointment.status}"></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Start At</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0"
+                                       th:text="${#dates.format(appointment.startDateTime, 'dd-MM-yyyy hh:mm a')}"></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">End At</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0"
+                                       th:text="${#dates.format(appointment.endDateTime, 'dd-MM-yyyy hh:mm a')}"></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Description</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="text-muted mb-0" th:text="${appointment.description}"></p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--            SYMPTOMS LIST           -->
+    <section>
+        <div class="container py-2 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-8 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 style="color: black" class="mb-2 mt-2 pb-2 pb-md-0 mb-md-3 text-capitalize">
+                                Symptoms list
+                                <button th:if=" ${appointment.status.name() != 'CLOSED' }" type="button"
+                                        class="btn btn-info text-right" style="float: right"
+                                        data-bs-toggle="modal" data-bs-target="#addSymptoms">
+                                    Add
+                                </button>
+                            </h3>
+
+                            <!--                            <div th:if="${#lists.isEmpty(symptomList)}" class="text-center">-->
+                            <!--                                <h5>No Symptoms Found !!</h5>-->
+                            <!--                            </div>-->
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-bordered mt-5"
+                                               th:if="${not #lists.isEmpty(symptomList)}">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Symptom</th>
+                                                <th scope="col">Body Part</th>
+                                                <th scope="col">Severity</th>
+                                                <!--                                        <th scope="col" sec:authorize="hasRole('PATIENT')">Actions</th>-->
+                                                <th scope="col" th:if=" ${appointment.status.name() == 'APPROVED' }">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="symptom : ${symptomList}">
+                                                <td th:text="${symptom.name}"></td>
+                                                <td th:text="${symptom.bodyPart}"></td>
+                                                <td th:text="${symptom.severity}"></td>
+                                                <!--                                        <td sec:authorize="hasRole('PATIENT')">-->
+                                                <td th:if=" ${appointment.status.name() == 'APPROVED' }">
+                                                    <a class="btn btn-info"
+                                                       th:href="@{/symptoms/edit(symptomsId = ${symptom.id})}">
+                                                        Edit
+                                                    </a>
+
+                                                    <a class="btn btn-success"
+                                                       th:href="@{/symptoms/delete(symptomsId = ${symptom.id})}">
+                                                        Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MODAL -->
+                            <div class="modal fade" id="addSymptoms" tabindex="-1" aria-labelledby="addSymptomsLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form method="post" th:action="@{/symptoms/add}" th:object="${symptoms}">
+                                            <input type="hidden" name="appointment" th:field="*{appointment}"/>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addSymptomsLabel">Add Symptom</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <script th:inline="javascript">
+                                                var error = /*[[ ${#fields.hasAnyErrors()}]]*/ "false";
+                                            </script>
+                                            <div class="modal-body">
+                                                <h6 class="text-primary text-center">* Fields are required</h6>
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-md-10 mb-4 ">
+                                                        <div class="form-outline">
+                                                            <input type="text" class="form-control form-control-lg"
+                                                                   title="Add symptoms"
+                                                                   th:field="*{name}"
+                                                                   th:errorclass="is-invalid"
+                                                            />
+                                                            <label class="form-label">Symptom Name*</label>
+                                                        </div>
+                                                        <ul class="text-danger form-text"
+                                                            th:if="${#fields.hasErrors('name')}">
+                                                            <li th:each="error : ${#fields.errors('name')}"
+                                                                th:text="${error}"></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-10 mb-4 ">
+                                                        <div class="form-outline">
+                                                            <input type="text" class="form-control form-control-lg"
+                                                                   title="Enter affected body part/s"
+                                                                   th:field="*{bodyPart}"
+                                                            />
+                                                            <label class="form-label">write affected body
+                                                                part</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10 mb-4 ">
+                                                        <select class="select form-control-lg"
+                                                                data-mdb-clear-button="true"
+                                                                data-mdb-filter="true"
+                                                                th:field="*{severity}">
+                                                            <option th:each="sever: ${severity}"
+                                                                    th:value="${sever}"
+                                                                    th:text="${sever}"
+                                                            >
+                                                            </option>
+                                                        </select>
+                                                        <label class="form-label select-label">Select severity</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--        PRESCRIPTION        -->
+    <section
+            th:if="${appointment.startDateTime.before(#dates.createNow()) && appointment.endDateTime.after(#dates.createNow()) && appointment.status.name() != 'PENDING' }"
+            sec:authorize="hasRole('DOCTOR')">
+        <div class="container py-2 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-8 col-lg-10 col-xl-10">
+                    <div class="card mt-3 mb-4 shadow-2-strong" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 style="color: black" class="mb-2 mt-2 pb-2 pb-md-0 mb-md-3 text-capitalize">
+                                Prescription details
+                                <a th:if=" ${appointment.status.name() == 'APPROVED' }"
+                                   sec:authorize="hasRole('DOCTOR')"></a>
+                                <!--                                <a-->
+                                <!--                                        th:if=" ${appointment.status.name() == 'APPROVED' }" sec:authorize="hasRole('DOCTOR')"-->
+                                <!--                                        title="Prescription" class="btn btn-info text-right" style="float: right"-->
+                                <!--                                        th:href="@{/doctor/prescription/description/add(appointmentId = ${appointment.id})}">-->
+                                <a th:if=" ${appointment.status.name() == 'APPROVED' }"
+                                   sec:authorize="hasRole('DOCTOR')"
+                                   title="Prescription" class="btn btn-info text-right" style="float: right"
+                                   th:href="@{/doctor/prescription/description/add(appointmentId = ${appointment.id})}">
+                                    <i class="fa fa-prescription"></i>
+                                </a>
+                            </h3>
+                            <div th:if="${prescription != null && prescription.description != null}">
+                                <h5 style="display: inline" >Description : </h5>
+                                <h5 style="display: inline" th:text="${prescription.description}"></h5>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table  table-hover table-bordered mt-1"
+                                               th:if="${not #lists.isEmpty(prescriptionDrugList)}">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th>Drug Name</th>
+                                                <th>Morning</th>
+                                                <th>Noon</th>
+                                                <th>Evening</th>
+                                                <th>Day</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="pre :${prescriptionDrugList}">
+
+                                                <td th:text="${pre.medicineName}"/>
+                                                <td th:text="${pre.days}"/>
+                                                <td th:text="${pre.morningDose}"/>
+                                                <td th:text="${pre.afternoonDose}"/>
+                                                <td th:text="${pre.eveningDose}"/>
+
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary"
+                               th:if="${not #lists.isEmpty(prescriptionDrugList)}"
+                               th:href="@{/appointment/prescription/download(appointmentId = ${appointment.id})}">
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--  Services    -->
+    <section sec:authorize="hasRole('DOCTOR')"
+             th:if=" ${appointment.startDateTime.before(#dates.createNow()) && appointment.endDateTime.after(#dates.createNow()) && appointment.status.name() != 'PENDING' }">
+        <div class="container py-2 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-8 col-lg-10 col-xl-10">
+                    <div class="card shadow-2-strong" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 style="color: black" class="mb-2 mt-2 pb-2 pb-md-0 mb-md-3 text-capitalize">
+                                Services List
+                                <button type="button" class="btn btn-info text-right"
+                                        style="float: right"
+                                        th:if=" ${appointment.status.name() == 'APPROVED' }"
+                                        data-bs-toggle="modal" data-bs-target="#addService">
+                                    Add
+                                </button>
+                            </h3>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-10">
+                                    <div class="table-responsive">
+                                        <table class="table  table-hover table-bordered mt-5"
+                                               th:if="${not #lists.isEmpty(prescriptionServiceList)}">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Service Name</th>
+                                                <th scope="col">Cost</th>
+                                                <th scope="col" th:if=" ${appointment.status.name() == 'APPROVED' }">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="service : ${prescriptionServiceList}">
+                                                <td th:text="${service.serviceName}"></td>
+                                                <td th:text="${service.cost}"></td>
+                                                <td th:if=" ${appointment.status.name() == 'APPROVED' }">
+                                                    <a class="btn btn-danger"
+                                                       th:href="@{/doctor/clinicservice/delete(serviceId = ${service.id})}">
+                                                        Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                             Modal -->
+                            <div class="modal fade" id="addService" tabindex="-1" aria-labelledby="addServiceLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form method="post" th:action="@{/doctor/clinicservice/add}"
+                                              th:object="${prescriptionClinicService}">
+                                            <input type="hidden" name="appointment" th:value="${param.appointmentId}"/>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addServiceLabel">Add Service</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h6 class="text-primary">* Fields are required</h6>
+                                                <div class="row">
+                                                    <div class="col-md-10 mb-4 d-flex align-items-center">
+                                                        <select class="select form-control-lg"
+                                                                data-mdb-clear-button="true"
+                                                                data-mdb-filter="true"
+                                                                th:field="*{serviceName}">
+                                                            <option th:each="service: ${clinicServiceList}"
+                                                                    th:value="${service}"
+                                                                    th:text="${service}"
+                                                            >
+                                                            </option>
+                                                        </select>
+                                                        <label class="form-label select-label">Select Service</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <div>
+        <div class="col-md-12 text-center">
+            <a class="btn btn-primary"
+               th:if=" ${appointment.status.name() == 'APPROVED'} or ${appointment.status.name() == 'CLOSED' }"
+               th:href="@{/appointment/invoice/download(appointmentId = ${appointment.id})}">
+                Download Invoice
+            </a>
+            <a class="btn btn-danger"
+               th:if=" ${appointment.status.name() == 'APPROVED'}"
+               th:href="@{/appointment/close(appointmentId = ${appointment.id})}">
+                Close Appointment
+            </a>
+        </div>
+    </div>
+    <br>
+</div>
+<div layout:fragment="otherJSResources">
+    <script th:inline="javascript">
+        $(document).ready(function (e) {
+            if (error == true) {
+                var myModal = new bootstrap.Modal(document.getElementById('addSymptoms'), {
+                    keyboard: false
+                });
+                myModal.show();
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

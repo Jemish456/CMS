@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}">
+<head>
+    <title>Register Staff Member</title>
+    <th:block layout:fragment="otherCSSResources">
+        <!--        Page Specific CSS -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/register-style.css}">
+    </th:block>
+
+</head>
+<body>
+<header>
+    <div layout:fragment="header-content">
+        <!--        extra header content-->
+
+    </div>
+
+</header>
+<main layout:fragment="content" class="container py-5">
+    <!--Page Content-->
+
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-10">
+                <div class="card mb-4">
+                    <div class="card-body">
+
+                        <!--                            BACK BUTTON             -->
+                            <div class="back-btn-div">
+                                <a class="back-btn" th:href="@{/staff/list}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                </a>
+                                <h3 style="color: black" class="mb-4 pb-2 pb-md-0 mb-md-5 text-capitalize">Staff Registration Form</h3>
+                            </div>
+                            <form method="post" th:action="@{/staff/add}" th:object="${member}"
+                                  enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="0">
+
+                                <!--                                first name, last name-->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="text" class="form-control" id="firstName"
+                                                   title="Enter First Name"
+                                                   th:field="*{firstName}"
+                                                   th:errorclass="is-invalid"
+                                            />
+                                            <label for="firstName" class="form-label">First Name*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('firstName')}">
+                                            <li th:each="error : ${#fields.errors('firstName')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="text" class="form-control" id="lastName"
+                                                   title="Enter Last Name"
+                                                   th:field="*{lastName}"
+                                                   th:errorclass="is-invalid"
+                                            />
+                                            <label class="form-label" for="lastName">Last name*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('lastName')}">
+                                            <li th:each="error : ${#fields.errors('lastName')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!--                            mobile number, email-->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="tel" id="mobileNumber" class="form-control"
+                                                   title="Enter mobile number"
+                                                   th:field="*{mobileNumber}"
+                                                   th:errorclass="is-invalid"
+                                            />
+                                            <label class="form-label" for="mobileNumber">Phone*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('mobileNumber')}">
+                                            <li th:each="error : ${#fields.errors('mobileNumber')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="email" id="email" class="form-control"
+                                                   title="Enter email address"
+                                                   th:field="*{email}"
+                                                   th:errorclass="is-invalid"
+                                            />
+                                            <label class="form-label" for="email">Email*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('email')}">
+                                            <li th:each="error : ${#fields.errors('email')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!--                                gender, Role-->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <select class="select form-control-sm"
+                                                data-mdb-clear-button="true"
+                                                data-mdb-filter="true"
+                                                th:field="*{memberRole}">
+                                            <option th:each="role: ${memberRole}"
+                                                    th:value="${role}"
+                                                    th:text="${role}"
+                                                    th:errorclass="is-invalid"
+                                            >
+                                            </option>
+                                        </select>
+                                        <label class="form-label select-label">Select Role</label>
+                                    </div>
+                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('memberRole')}">
+                                        <li th:each="error : ${#fields.errors('memberRole')}"
+                                            th:text="${error}"></li>
+                                    </ul>
+
+                                    <div class="col-md-6 mb-4">
+                                        <span class="mb-2 pb-1">Gender* :&nbsp;</span>
+                                        <th:block th:each="gender : ${genders}">
+                                            <div class="form-check form-check-inline">
+                                                <input
+                                                        class="form-check-input"
+                                                        type="radio"
+                                                        th:id="${gender}"
+                                                        th:value="${gender}"
+                                                        th:field="*{gender}"
+                                                        th:errorclass="is-invalid"
+                                                />
+                                                <label class="form-check-label" th:for="${gender}"
+                                                       th:text="${gender}"></label>
+                                            </div>
+                                        </th:block>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('gender')}">
+                                            <li th:each="error : ${#fields.errors('gender')}" th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 align-items-center">
+                                        <div class="form-outline timepicker w-100">
+                                            <input type="text" class="form-control form-control-lg" id="startWorkTime"
+                                                   title="Start Time"
+                                                   data-mdb-toggle="timepicker"
+                                                   th:errorclass="is-invalid"
+                                                   th:field="*{startWorkTime}"
+                                            />
+                                            <label for="startWorkTime" class="form-label">Start Time*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('startWorkTime')}">
+                                            <li th:each="error : ${#fields.errors('startWorkTime')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4  align-items-center">
+                                        <div class="form-outline timepicker w-100">
+                                            <input type="text" class="form-control form-control-lg" id="endWorkTime"
+                                                   title="Enter Time"
+                                                   th:errorclass="is-invalid"
+                                                   data-mdb-toggle="timepicker"
+                                                   th:field="*{endWorkTime}"
+                                            />
+                                            <label for="endWorkTime" class="form-label">End Time*</label>
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('endWorkTime')}">
+                                            <li th:each="error : ${#fields.errors('endWorkTime')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 align-items-center">
+                                        <div class="form-outline datepicker w-100">
+                                            <input type="text" class="form-control form-control-lg" id="joiningDate"
+                                                   title="Enter Joining Date"
+                                                   th:field="*{joiningDate}"
+                                                   th:errorclass="is-invalid"
+                                                   data-mdb-toggle="datepicker"
+                                            />
+                                            <label for="joiningDate" class="form-label">Joining Date*</label>
+
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('joiningDate')}">
+                                            <li th:each="error : ${#fields.errors('joiningDate')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" class="form-control" id="salary"
+                                                   title="Salary"
+                                                   th:errorclass="is-invalid"
+                                                   th:field="*{salary}"
+                                            />
+                                            <label class="form-label" for="salary">Salary*</label>
+
+                                        </div>
+                                        <ul class="text-danger form-text" th:if="${#fields.hasErrors('salary')}">
+                                            <li th:each="error : ${#fields.errors('salary')}"
+                                                th:text="${error}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-10 mb-2 pb-2">
+                                        <div class="form-outline">
+                                            <textarea class="form-control" id="address"
+                                                      rows="3"
+                                                      title="Enter Address"
+                                                      th:field="*{address}"
+                                            ></textarea>
+                                            <label for="address" class="form-label">Address</label>                                        </div>
+                                    </div>
+                                    <ul class="text-danger form-text" th:if="${#fields.hasErrors('address')}">
+                                        <li th:each="error : ${#fields.errors('address')}"
+                                            th:text="${error}"></li>
+                                    </ul>
+                                </div>
+
+
+                                <div class="mt-2 pt-2">
+                                    <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                                    <input class="btn btn-danger btn-lg" type="reset" value="Reset"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<th:block th:fragment="otherJSResources">
+    <!--        Page Specific JS -->
+    <script type="text/javascript">
+
+    </script>
+</th:block>
+</body>
+</html>
